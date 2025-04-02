@@ -14,7 +14,7 @@ SC2002-BTO/
 │    ├── processed/          # Modified datasets (output)
 │── docs/                    # Documentation folder
 │    ├── UML/                # UML diagrams
-│    ├── //add documentation        # Project-related PDFs and docs
+│    ├── //add documentation        # Project-related PDFs and written report
 │── .gitignore               # Specifies files to be ignored by Git
 │── README.md                # Project documentation (overview, instructions)
 ```

@@ -1,6 +1,7 @@
 # SC2002-BTO
 
-#Repository Structure
+##Repository Structure
+'''
 SC2002-BTO/
 │── src/
 │    ├── main/                # Main application code
@@ -17,4 +18,4 @@ SC2002-BTO/
 │    ├── processed/            # Project-related PDFs
 │── .gitignore               # Specifies files to be ignored by Git
 │── README.md                # Project documentation (overview, instructions)
-
+'''

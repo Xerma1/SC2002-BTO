@@ -19,4 +19,4 @@ SC2002-BTO/
 │── .gitignore               # Specifies files to be ignored by Git
 │── README.md                # Project documentation (overview, instructions)
 ```
-Project assignment details is in docs/
+Project assignment pdf is in docs/ for easy access

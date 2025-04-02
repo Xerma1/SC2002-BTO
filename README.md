@@ -5,7 +5,7 @@
 SC2002-BTO/
 │── src/                      # Source folder to store source code
 │    ├── main/                # Main application code
-│    │    │── BTO_App.java         # The application java code
+│    │    │── btoApp.java         # The application java code
 │    │    ├── //add class folders      # Folders to group classes
 │    ├── test/                # Test cases
 │    │    ├── test.java              # Test code, add more if needed

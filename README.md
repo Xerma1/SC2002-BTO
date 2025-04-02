@@ -9,7 +9,7 @@ SC2002-BTO/
 │    │    ├── //add class folders      # Folders to group classes
 │    ├── test/                # Test cases
 │    │    ├── test.java              # Test code
-│    │    ├── resources/             # Mock data, test configurations
+│    │    ├── resources/             # Mock data, test configurations if needed
 │── data/                    # Stores .xlsx datasets for input and processing
 │    ├── input/              # Initial dataset
 │    ├── processed/          # Modified datasets (output)

@@ -3,13 +3,12 @@
 ## Repository Structure (as of now)
 ```
 SC2002-BTO/
-│── src/
+│── src/                      # Source folder to store source code
 │    ├── main/                # Main application code
 │    │    │── BTO_App.java         # The application java code
 │    │    ├── //add class folders      # Folders to group classes
 │    ├── test/                # Test cases
-│    │    ├── test.java              # Test code
-│    │    ├── resources/             # Mock data, test configurations if needed
+│    │    ├── test.java              # Test code, add more if needed
 │── data/                    # Stores .xlsx datasets for input and processing
 │    ├── input/              # Initial dataset
 │    ├── processed/          # Modified datasets (output)

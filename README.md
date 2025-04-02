@@ -1,6 +1,6 @@
 # SC2002-BTO
 
-## Repository Structure
+## Repository Structure (as of now)
 ```
 SC2002-BTO/
 │── src/
@@ -11,11 +11,11 @@ SC2002-BTO/
 │    │    ├── test.java              # Test code
 │    │    ├── resources/             # Mock data, test configurations
 │── data/                    # Stores .xlsx datasets for input and processing
-│    ├── input.xlsx          # Initial dataset
+│    ├── input/              # Initial dataset
 │    ├── processed/          # Modified datasets (output)
 │── docs/                    # Documentation folder
-│    ├── initial/                # UML diagrams
-│    ├── processed/            # Project-related PDFs
+│    ├── UML/                # UML diagrams
+│    ├── //add documentation        # Project-related PDFs and docs
 │── .gitignore               # Specifies files to be ignored by Git
 │── README.md                # Project documentation (overview, instructions)
 ```

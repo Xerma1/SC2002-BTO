@@ -5,13 +5,13 @@
 SC2002-BTO/
 │── src/                      # Source folder to store source code
 │    ├── main/                # Main application code
-│    │    │── btoApp.java      # The application java code
 │    │    ├── boundary/        # Stores all boundary classes
 │    │    ├── control/         # Stores all control classes
 │    │    ├── entity/          # Stores all entity classes
 │    │    ├── exceptions/      # Stores all exception classes
 │    │    ├── repository/      # Stores repository classes
 │    │    ├── serializer/      # Stores the serilizer classes
+│    │    │── btoApp.java      # The application java code
 │    ├── test/                # Test cases
 │    │    ├── test.java              # Test code, add more if needed
 │── data/                    # Stores .xlsx datasets for input and processing

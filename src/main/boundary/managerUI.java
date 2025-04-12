@@ -7,7 +7,7 @@ public class managerUI {
     public static void printUI(Scanner scanner) {
 
         // UI, edit accordingly
-        System.out.println("<< Viewing as applicant >>");
+        System.out.println("<< Viewing as manager >>");
         System.out.println(" ");
         System.out.println("1. ");
         System.out.println("2. ");

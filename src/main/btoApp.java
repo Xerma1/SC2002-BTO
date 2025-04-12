@@ -44,10 +44,11 @@ public class btoApp {
 
         // Prompt for username and password
         boolean isLoggedIn = false;
+        String username = "";
         do {
             try {
                 System.out.print("Enter username: ");
-                String username = scanner.nextLine();
+                username = scanner.nextLine();
 
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
@@ -64,9 +65,9 @@ public class btoApp {
 
         // Display UI based on the usergroup
         switch (usergroup) {
-            case "applicant" -> applicantUI.printUI(scanner);
-            case "officer" -> officerUI.printUI(scanner);
-            case "manager" -> managerUI.printUI(scanner);
+            case "applicant" -> applicantUI.printUI(scanner, username);
+            case "officer" -> officerUI.printUI(scanner, username);
+            case "manager" -> managerUI.printUI(scanner, username);
             default -> System.out.println("Invalid user group.");
             }
 

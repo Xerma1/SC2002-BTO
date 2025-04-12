@@ -3,8 +3,11 @@ package main.boundary;
 import java.util.Scanner;
 
 public class applicantUI {
-    public static void printUI(Scanner scanner) {
-
+    public static void printUI(Scanner scanner, String username) {
+        //TODO: create applicant class
+            //
+            //
+            
         // UI, edit accordingly
         System.out.println("<< Viewing as applicant >>");
         System.out.println(" ");

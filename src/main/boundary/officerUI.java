@@ -4,7 +4,12 @@ import java.util.Scanner;
 
 public class officerUI {
     
-    public static void printUI(Scanner scanner) {
+    public static void printUI(Scanner scanner, String username) {
+
+        //TODO: create officer class
+            //
+            //
+
 
         // UI, edit accordingly
         System.out.println("<< Viewing as officer >>");

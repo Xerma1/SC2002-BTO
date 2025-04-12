@@ -6,7 +6,7 @@ public class officerUI {
     
     public static void printUI(Scanner scanner, String username) {
 
-        //TODO: create officer class
+        //TODO: create instance of officer class
             //
             //
 

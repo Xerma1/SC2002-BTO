@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class applicantUI {
     public static void printUI(Scanner scanner, String username) {
-        //TODO: create applicant class
+        //TODO: create instance of applicant class
             //
             //
             

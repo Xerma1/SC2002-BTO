@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class managerUI {
 
     public static void printUI(Scanner scanner, String username) {
-         //TODO: create manager class
+         //TODO: create instance of manager class
             //
             //
             

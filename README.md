@@ -11,7 +11,7 @@ SC2002-BTO/
 |    │    │    ├── managerUI.java      #Shows all the options for manager and process input
 │    │    ├── control/        # Stores all control classes
 |    │    │    ├── InvalidLoginException.java      #Custom exception class handling invalid logins
-|    │    │    ├── loginManager.java               #Handles reading of data to compare input username and password
+|    │    │    ├── loginManager.java               #Checks input username and password
 │    │    ├── entity/         # Stores all entity classes
 │    │    │── btoApp.java     # The application java code
 │    ├── test/                # Test cases

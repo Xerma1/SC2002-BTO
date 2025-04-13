@@ -5,7 +5,7 @@ import java.io.FileReader; //Used to open and read the file
 import java.io.IOException; //Handles exceptions that may occur during file operations
 
 public class dataSearch {
-    public static String[] search (String userID, String usergroup) {
+    public static String[] search (String userID, String usergroup) { // Searches data to find a matching userID and return an array containing all personal data
         String filePath = "data/processed/" + usergroup + ".csv"; // Path to the CSV file based on usergroup parameter
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { 
@@ -24,7 +24,7 @@ public class dataSearch {
             e.printStackTrace();
         }
 
-        // Login failed, throw custom exception InvalidLoginException
+        // User not found, print error message and return empty array
         System.out.println("User not found in " + usergroup + ".csv.");
         return null;
         

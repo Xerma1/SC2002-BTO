@@ -28,7 +28,7 @@ public class managerUI implements IusergroupUI {
             //
             
 
-        // UI, edit accordingly
+        // Print UI
         System.out.println("<< Viewing as manager: " + username + " >>");
         System.out.println(managerMenu);
 

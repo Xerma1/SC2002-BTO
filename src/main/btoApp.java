@@ -9,20 +9,23 @@ import main.boundary.*;
 
 public class btoApp {
     
+    private static final String UI = """
+            Welcome to BTO application manager!
+
+            Who are you logging in as?
+            1. Applicant
+            2. Officer
+            3. Manager
+
+            Input: """;
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
         String usergroup = "";
 
-        // UI
-        System.out.println("Welcome to BTO application manager!");
-        System.out.println(" ");
-        System.out.println("Who are you logging in as?");
-        System.out.println("1. Applicant");
-        System.out.println("2. Officer");
-        System.out.println("3. Manager");
-        System.out.println(" ");
-        System.out.print("Input: ");
+        // Print UI
+        System.out.print(UI);
+        
 
         // Prompt user for usergroup
         while (usergroup.isEmpty()) {

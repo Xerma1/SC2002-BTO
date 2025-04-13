@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class managerUI implements IusergroupUI {
 
+    @Override
     public void printUI(Scanner scanner, String username) {
          //TODO: create instance of manager class
             //

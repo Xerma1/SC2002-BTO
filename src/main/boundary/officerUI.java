@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class officerUI implements IusergroupUI {
     
+    @Override
     public void printUI(Scanner scanner, String username) {
 
         //TODO: create instance of officer class

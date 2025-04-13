@@ -11,9 +11,9 @@ BTO_Application/
 │    │    │── btoApp.java     # The application java code
 │    ├── test/                # Test cases
 │    │    ├── test.java              # Test code, add more if needed
-│── data/                    # Stores .xlsx datasets for input and processing
-│    ├── initial/              # Initial dataset      
-│    ├── processed/          # Modified datasets (output)
+│── data/                    # Stores .csv datasets for input and processing
+│    ├── initial/              # Original datasets to be used for data reset     
+│    ├── processed/          # Datasets to store updates written from program
 │── docs/                    # Documentation folder
 │    ├── UML/                # UML diagrams
 │    ├── //add documentation        # Project-related PDFs and written report

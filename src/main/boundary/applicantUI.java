@@ -24,7 +24,7 @@ public class applicantUI implements IusergroupUI {
             //
             //
        
-        // UI, edit accordingly
+        // Print UI
         System.out.println("<< Viewing as applicant: " + username + " >>");
         System.out.println(applicantMenu);
 

@@ -52,8 +52,14 @@ public class btoApp {
         String userID = "";
         do {
             try {
-                System.out.print("Enter user ID: ");
+                System.out.print("Enter user ID (type 'return' to go back to previous page): ");
                 userID = scanner.nextLine();
+
+                // Handle program restart if user types in "return"
+                if (userID.equalsIgnoreCase("return")) {
+                    usergroup = ""; // Reset the user group to trigger re-selection
+                    break; // Exit the login loop to go back to user group selection
+                }
 
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
@@ -64,11 +70,17 @@ public class btoApp {
                     System.out.println(e.getMessage()); // Print the custom exception message
                     }
             } while (isLoggedIn == false);
+        
+        if (usergroup.isEmpty()) {
+            // Restart the user group selection loop if "return" was entered
+            main(args);
+            return;
+        }
 
         System.out.println("Login successful!");
         System.out.println("");
         
-        //Get the username associated with the userID
+        //Get the username associated with the userID to be passed into userUI.printUI()
         String [] data = dataSearch.search(userID, usergroup);
         String username = data[0];
         

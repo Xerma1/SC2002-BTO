@@ -6,7 +6,7 @@ import java.io.IOException; //Handles exceptions that may occur during file oper
 
 public class dataSearch {
     public static String[] search (String userID, String usergroup) { // Searches data to find a matching userID and return an array containing all personal data
-        String filePath = "data/processed/" + usergroup + ".csv"; // Path to the CSV file based on usergroup parameter
+        String filePath = "data/processed/users.csv"; // Path to the CSV file based on usergroup parameter
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { 
             String line;

@@ -9,9 +9,11 @@ SC2002-BTO/
 |    │    │    ├── applicantUI.java    #Shows all the options for applicant and process input
 |    │    │    ├── officerUI.java      #Shows all the options for officer and process input
 |    │    │    ├── managerUI.java      #Shows all the options for manager and process input
+|    │    │    ├── IusergroupUI.java      #Interface for UI
 │    │    ├── control/        # Stores all control classes
 |    │    │    ├── InvalidLoginException.java      #Custom exception class handling invalid logins
-|    │    │    ├── loginManager.java               #Checks input username and password
+|    │    │    ├── loginManager.java               #Control logic that checks input username and password
+|    │    │    ├── usergroupUIFactory.java         #Control logic to decide which UI to display
 │    │    ├── entity/         # Stores all entity classes
 │    │    │── btoApp.java     # The application java code
 │    ├── test/                # Test cases

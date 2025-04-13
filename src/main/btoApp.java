@@ -25,7 +25,6 @@ public class btoApp {
 
         // Print UI
         System.out.print(UI);
-        
 
         // Prompt user for usergroup
         while (usergroup.isEmpty()) {

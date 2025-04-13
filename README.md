@@ -1,4 +1,4 @@
-# SC2002-BTO
+# SC2002-BTO application project
 
 ## Repository Structure (as of now)
 ```

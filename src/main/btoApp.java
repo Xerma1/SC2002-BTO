@@ -1,7 +1,7 @@
 package main;
 
 import main.control.InvalidLoginException;
-import main.control.dataSearch;
+import main.control.dataManager;
 import main.control.loginManager;
 import main.control.usergroupUIFactory;
 
@@ -81,12 +81,12 @@ public class btoApp {
         System.out.println("");
         
         //Get the username associated with the userID to be passed into userUI.printUI()
-        String [] data = dataSearch.search(userID, usergroup);
+        String [] data = dataManager.search(userID);
         String username = data[0];
         
         // Display UI based on the usergroup using dependency injection
         IusergroupUI userUI = usergroupUIFactory.getUI(usergroup);
-        userUI.printUI(scanner, username);
+        userUI.printUI(scanner, username, userID);
 
         scanner.close();
         }

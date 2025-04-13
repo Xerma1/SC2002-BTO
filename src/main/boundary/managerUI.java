@@ -22,7 +22,7 @@ public class managerUI implements IusergroupUI {
                 Input: """;
 
     @Override
-    public void printUI(Scanner scanner, String username) {
+    public void printUI(Scanner scanner, String username, String userID) {
          //TODO: create instance of manager class
             //
             //

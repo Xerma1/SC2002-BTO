@@ -2,6 +2,10 @@ package main.boundary;
 
 import java.util.Scanner;
 
+import main.control.dataManager;
+import main.entity.applicant;
+import main.entity.user;
+
 public class applicantUI implements IusergroupUI {
 
      private static final String applicantMenu = """
@@ -19,19 +23,38 @@ public class applicantUI implements IusergroupUI {
 
                 Input: """;
     @Override
-    public void printUI(Scanner scanner, String username) {
+    public void printUI(Scanner scanner, String username, String userID) {
+
         //TODO: create instance of applicant class
-            //
-            //
+            String[] userdata = dataManager.search(userID);
+            String name = userdata[0];
+            String ID = userdata[1];
+            int age = Integer.parseInt(userdata[2]);
+            boolean married = false;
+            if (userdata[3] == "Married"){
+                married = true;
+            }
+        
+            applicant Applicant = new applicant(name, ID, age, married);
        
-        // Print UI
-        System.out.println("<< Viewing as applicant: " + username + " >>");
-        System.out.println(applicantMenu);
+        // Switch statement to process each option
+        int choice;
+        do{
+            // Print UI
+            System.out.println("<< Viewing as applicant: " + username + " >>");
+            System.out.println(applicantMenu);
+            choice = scanner.nextInt();
+            scanner.nextLine();
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        //Input switch statment 
+            switch (choice){
+                case 1 -> {
+                    Applicant.changePassword();
+                }
+                case 10 -> System.out.println("Exiting....");
+                default -> System.out.print("default");
+            }
+        }while (choice != 10);
+        
     }
 
 }

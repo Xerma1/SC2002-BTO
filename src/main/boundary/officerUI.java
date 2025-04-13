@@ -32,7 +32,7 @@ public class officerUI implements IusergroupUI {
                 Input: """;
 
     @Override
-    public void printUI(Scanner scanner, String username) {
+    public void printUI(Scanner scanner, String username, String userID) {
 
         //TODO: create instance of officer class
             //

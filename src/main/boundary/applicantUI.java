@@ -1,10 +1,8 @@
 package main.boundary;
 
 import java.util.Scanner;
-
 import main.control.dataManager;
 import main.entity.applicant;
-import main.entity.user;
 
 public class applicantUI implements IusergroupUI {
 
@@ -21,11 +19,11 @@ public class applicantUI implements IusergroupUI {
                 9.  View/edit/delete enquiries
                 10. Exit
 
-                Input: """;
+                """;
     @Override
     public void printUI(Scanner scanner, String username, String userID) {
 
-        //TODO: create instance of applicant class
+        // Create instance of applicant class
             String[] userdata = dataManager.search(userID);
             String name = userdata[0];
             String ID = userdata[1];
@@ -43,6 +41,7 @@ public class applicantUI implements IusergroupUI {
             // Print UI
             System.out.println("<< Viewing as applicant: " + username + " >>");
             System.out.println(applicantMenu);
+            System.out.print("Input: ");
             choice = scanner.nextInt();
             scanner.nextLine();
 

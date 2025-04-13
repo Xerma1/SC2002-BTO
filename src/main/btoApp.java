@@ -17,15 +17,16 @@ public class btoApp {
             1. Applicant
             2. Officer
             3. Manager
-
-            Input: """;
+            
+            """;
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
         String usergroup = "";
 
         // Print UI
-        System.out.print(UI);
+        System.out.println(UI);
+        System.out.print("Input: ");
 
         // Prompt user for usergroup
         while (usergroup.isEmpty()) {

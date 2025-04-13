@@ -16,7 +16,7 @@ public class managerUI implements IusergroupUI {
                 8.  Approve/reject applicant withdrawl requests
                 9.  Generate report of applicants with respective flat bookings
                 10. View all enquiries of all projects
-                11. View/reply to enquiries regaring own handling projects
+                11. View/reply to enquiries regarding own handling projects
                 12. Exit
 
                 Input: """;

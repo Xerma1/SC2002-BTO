@@ -2,9 +2,9 @@ package main.boundary;
 
 import java.util.Scanner;
 
-public class officerUI {
+public class officerUI implements IusergroupUI {
     
-    public static void printUI(Scanner scanner, String username) {
+    public void printUI(Scanner scanner, String username) {
 
         //TODO: create instance of officer class
             //
@@ -12,7 +12,7 @@ public class officerUI {
 
 
         // UI, edit accordingly
-        System.out.println("<< Viewing as officer >>");
+        System.out.println("<< Viewing as officer: " + username + " >>");
         System.out.println(" ");
         System.out.println("1. ");
         System.out.println("2. ");

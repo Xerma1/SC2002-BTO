@@ -2,16 +2,16 @@ package main.boundary;
 
 import java.util.Scanner;
 
-public class managerUI {
+public class managerUI implements IusergroupUI {
 
-    public static void printUI(Scanner scanner, String username) {
+    public void printUI(Scanner scanner, String username) {
          //TODO: create instance of manager class
             //
             //
             
 
         // UI, edit accordingly
-        System.out.println("<< Viewing as manager >>");
+        System.out.println("<< Viewing as manager: " + username + " >>");
         System.out.println(" ");
         System.out.println("1. ");
         System.out.println("2. ");

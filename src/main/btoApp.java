@@ -2,6 +2,8 @@ package main;
 
 import main.control.InvalidLoginException;
 import main.control.loginManager;
+import main.control.usergroupUIFactory;
+
 import java.util.Scanner;
 import main.boundary.*;
 
@@ -32,7 +34,7 @@ public class btoApp {
                     case 2 -> "officer";
                     case 3 -> "manager";
                     default -> {
-                        System.out.println("Please input only a number representing your choice");
+                        System.out.print("Invalid input. Try again. Input: ");
                         yield ""; //Exit the switch with an empty string after printing error message
                     }   
                 };
@@ -61,15 +63,12 @@ public class btoApp {
             } while (isLoggedIn == false);
 
         System.out.println("Login successful!");
+        System.out.println("");
         
 
-        // Display UI based on the usergroup
-        switch (usergroup) {
-            case "applicant" -> applicantUI.printUI(scanner, username);
-            case "officer" -> officerUI.printUI(scanner, username);
-            case "manager" -> managerUI.printUI(scanner, username);
-            default -> System.out.println("Invalid user group.");
-            }
+        // Display UI based on the usergroup using dependency injection
+        IusergroupUI userUI = usergroupUIFactory.getUI(usergroup);
+        userUI.printUI(scanner, username);
 
         scanner.close();
         }

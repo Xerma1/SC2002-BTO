@@ -2,7 +2,7 @@
 
 ## Repository Structure (as of now)
 ```
-SC2002-BTO/
+BTO_Application/
 │── src/                      # Source folder to store source code
 │    ├── main/                # Main application code
 │    │    ├── boundary/       # Stores all boundary classes

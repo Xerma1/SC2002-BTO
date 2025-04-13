@@ -39,7 +39,7 @@ public class officerUI implements IusergroupUI {
             //
 
 
-        // UI, edit accordingly
+        // Print UI
         System.out.println("<< Viewing as officer: " + username + " >>");
         System.out.println(officerMenu);
 

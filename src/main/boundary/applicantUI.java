@@ -21,7 +21,7 @@ public class applicantUI implements IusergroupUI {
 
                 """;
     @Override
-    public void printUI(Scanner scanner, String username, String userID) {
+    public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
             String[] userdata = dataManager.search(userID);

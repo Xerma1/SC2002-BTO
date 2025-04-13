@@ -85,9 +85,9 @@ public class btoApp {
         String [] data = dataManager.search(userID);
         String username = data[0];
         
-        // Display UI based on the usergroup using dependency injection
+        // Run menu based on the usergroup using dependency injection
         IusergroupUI userUI = usergroupUIFactory.getUI(usergroup);
-        userUI.printUI(scanner, username, userID);
+        userUI.runMenu(scanner, username, userID);
 
         scanner.close();
         }

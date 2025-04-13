@@ -34,7 +34,7 @@ public class officerUI implements IusergroupUI {
                 """;
 
     @Override
-    public void printUI(Scanner scanner, String username, String userID) {
+    public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of manager class
             String[] userdata = dataManager.search(userID);

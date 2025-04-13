@@ -4,10 +4,8 @@ import java.io.BufferedReader; //Used to read text from a file line by line
 import java.io.FileReader; //Used to open and read the file
 import java.io.IOException; //Handles exceptions that may occur during file operations
 
-public class loginManager {
-    
-    // Login function that checks whether the given username and password matches
-    public static boolean login(String userID, String password, String usergroup) throws InvalidLoginException {
+public class dataSearch {
+    public static String[] search (String userID, String usergroup) {
         String filePath = "data/processed/" + usergroup + ".csv"; // Path to the CSV file based on usergroup parameter
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { 
@@ -15,11 +13,10 @@ public class loginManager {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(","); // Splits current line into an array of strings eg."admin,password" -> [admin, password] 
                 String storedUserID = values[1].trim(); // Second column: userID, trimmed to remove leading and trailing whitespace
-                String storedPassword = values[4].trim(); // Fifth column: password
 
-                // Check if userID and password match
-                if (storedUserID.equals(userID) && storedPassword.equals(password)) {
-                    return true; // Login successful
+                // Check if userID matches
+                if (storedUserID.equals(userID)) {
+                    return values; // Found
                 }
             }
         } catch (IOException e) { //catches any IOException that might occur while reading the file
@@ -28,7 +25,10 @@ public class loginManager {
         }
 
         // Login failed, throw custom exception InvalidLoginException
-        throw new InvalidLoginException("Invalid userID or password");
+        System.out.println("User not found in " + usergroup + ".csv.");
+        return null;
         
     }
+    
+
 }

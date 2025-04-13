@@ -1,6 +1,7 @@
 package main;
 
 import main.control.InvalidLoginException;
+import main.control.dataSearch;
 import main.control.loginManager;
 import main.control.usergroupUIFactory;
 
@@ -48,16 +49,16 @@ public class btoApp {
 
         // Prompt for username and password
         boolean isLoggedIn = false;
-        String username = "";
+        String userID = "";
         do {
             try {
-                System.out.print("Enter username: ");
-                username = scanner.nextLine();
+                System.out.print("Enter user ID: ");
+                userID = scanner.nextLine();
 
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
 
-                isLoggedIn = loginManager.login(username, password, usergroup);
+                isLoggedIn = loginManager.login(userID, password, usergroup);
                 
                 } catch (InvalidLoginException e) {
                     System.out.println(e.getMessage()); // Print the custom exception message
@@ -67,7 +68,10 @@ public class btoApp {
         System.out.println("Login successful!");
         System.out.println("");
         
-
+        //Get the username associated with the userID
+        String [] data = dataSearch.search(userID, usergroup);
+        String username = data[0];
+        
         // Display UI based on the usergroup using dependency injection
         IusergroupUI userUI = usergroupUIFactory.getUI(usergroup);
         userUI.printUI(scanner, username);

@@ -4,7 +4,6 @@ import java.util.Scanner;
 import main.control.dataManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.viewFilterFactory;
-import main.control.viewFilters.viewProjectsAll;
 import main.entity.applicant;
 
 public class applicantUI implements IusergroupUI {

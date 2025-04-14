@@ -7,7 +7,7 @@ public class project {
     private String neighbourhood;
     private Map<String, Integer> flatTypes; // Map of flat types and their respective counts
     private String openDate;
-    private int closeDate;
+    private String closeDate;
     private String manager;
     //private String officer;
     //private EnquiryList enquiries;

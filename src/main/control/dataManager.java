@@ -7,80 +7,84 @@ import java.io.FileWriter;
 import java.io.IOException; //Handles exceptions that may occur during file operations
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ * This class's role is to handle on file read/write methods that the app uses
+ * Current methods: utility read/write CSV, search(), changePassword(), 
+ */
 
 public class dataManager {
 
-    public static String[] search (String userID) { // Searches data to find a matching userID and return an array containing all personal data
-        String filePath = "data/processed/users.csv"; // Path to the CSV file based on usergroup parameter
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { 
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(","); // Splits current line into an array of strings eg."admin,password" -> [admin, password] 
-                String storedUserID = values[1].trim(); // Second column: userID, trimmed to remove leading and trailing whitespace
-
-                // Check if userID matches
-                if (storedUserID.equals(userID)) {
-                    return values; // Found
-                }
-            }
-        } catch (IOException e) { //catches any IOException that might occur while reading the file
-            System.err.println("Error reading file: " + filePath);
-            e.printStackTrace();
-        }
-
-        // User not found, print error message and return empty array
-        System.out.println("User not found in users.csv.");
-        return null;
-        
-    }
-    
-    public static void changePassword(String userID, String newPassword){
-        String filePath = "data/processed/users.csv"; // Path to the CSV file
+    // Utility method to read CSV file
+    public static List<String[]> readCSV(String filePath) throws IOException {
         List<String[]> rows = new ArrayList<>();
-        boolean userFound = false;
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
             String line;
-            // Read all rows into memory
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values[1].trim().equals(userID)) { // Match userID 
-                    userFound = true;
-                    // Update the password (assuming it's in the fifth column)
-                    values[4] = newPassword;
-                }
-                rows.add(values); // Add the row (updated or not) to the list
+                rows.add(line.split(",")); // Split each line into an array of strings
             }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + filePath);
-            e.printStackTrace();
-            return;
         }
-        
-        if (!userFound) {
-            System.out.println("User not found.");
-            return;
-        }
+        return rows;
+    }
 
-        // Write updated rows back to the file
+    // Utility method to write into CSV file
+    public static void writeCSV(String filePath, List<String[]> rows) throws IOException{
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (String[] row : rows) {
                 bw.write(String.join(",", row));
                 bw.newLine();
             }
+        } 
+    }
+
+    // Method to fetch user data
+    public static String[] search(String userID) {
+        String filePath = "data/processed/users.csv"; // Path to the CSV file
+
+        try {
+            List<String[]> rows = readCSV(filePath); // Use utility method
+            for (String[] values : rows) {
+                String storedUserID = values[1].trim(); // Second column: userID
+                if (storedUserID.equals(userID)) {
+                    return values; // Found
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + filePath);
+            e.printStackTrace();
+        }
+
+        System.out.println("User not found in users.csv.");
+        return null;
+    }
+
+    // Method to change password
+    public static void changePassword(String userID, String newPassword) {
+        String filePath = "data/processed/users.csv"; // Path to the CSV file
+        List<String[]> rows;
+
+        try {
+            rows = readCSV(filePath); // Use utility method
+            for (String[] values : rows) {
+                if (values[1].trim().equals(userID)) { // Match userID
+                    values[4] = newPassword; // Update the password
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + filePath);
+            e.printStackTrace();
+            return;
+        }
+
+        // Write updated rows back to the file
+        try {
+            writeCSV(filePath, rows);
         } catch (IOException e) {
             System.err.println("Error writing to file: " + filePath);
             e.printStackTrace();
         }
 
-        System.out.println("Password updated successfully.");
-        System.out.println("");
-        
+        System.out.println("Password updated successfully!");
     }
-    
-    
+
 }
 

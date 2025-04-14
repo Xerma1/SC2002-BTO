@@ -3,7 +3,7 @@ package main.entity;
 import main.control.dataManager;
 import java.util.Scanner;
 
-public abstract class user {
+public class user {
     private String name;
     private String userID;
     private int age;
@@ -28,6 +28,9 @@ public abstract class user {
         
     }
 
+    public boolean getMarried(){
+        return married;
+    }
     //public void setFilter(ViewFilter f){}
 
 

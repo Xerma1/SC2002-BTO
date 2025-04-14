@@ -2,6 +2,9 @@ package main.boundary;
 
 import java.util.Scanner;
 import main.control.dataManager;
+import main.control.viewFilters.IviewFilter;
+import main.control.viewFilters.viewFilterFactory;
+import main.control.viewFilters.viewProjectsAll;
 import main.entity.applicant;
 
 public class applicantUI implements IusergroupUI {
@@ -28,10 +31,11 @@ public class applicantUI implements IusergroupUI {
             String name = userdata[0];
             String ID = userdata[1];
             int age = Integer.parseInt(userdata[2]);
-            boolean married = false;
-            if (userdata[3] == "Married"){
+            boolean married;
+            if (userdata[3].equalsIgnoreCase("Married")){
                 married = true;
             }
+            else married = false;
         
             applicant Applicant = new applicant(name, ID, age, married);
        
@@ -49,6 +53,13 @@ public class applicantUI implements IusergroupUI {
                 case 1 -> {
                     Applicant.changePassword();
                 }
+                case 2 -> {
+                    IviewFilter viewInterface = viewFilterFactory.getViewFilter(Applicant.filterType);
+                    viewInterface.view();
+                    System.out.println("Press 'enter' to continue...");
+                    String buffer = scanner.nextLine();
+                    }
+                
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }

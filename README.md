@@ -21,3 +21,5 @@ BTO_Application/
 │── README.md                # Project documentation (overview, instructions)
 ```
 Project assignment pdf is in docs/ for easy access
+
+so far login, change password, view projects by martial status is done T^T

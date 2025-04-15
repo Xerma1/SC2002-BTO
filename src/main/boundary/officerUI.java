@@ -50,7 +50,7 @@ public class officerUI implements IusergroupUI {
         int choice;
         do{
             // Print UI
-            System.out.println("<< Viewing as applicant: " + username + " >>");
+            System.out.println("<< Logged in as officer: " + username + " >>");
             System.out.println(officerMenu);
             System.out.print("Input: ");
 

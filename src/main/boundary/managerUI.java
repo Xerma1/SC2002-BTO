@@ -39,7 +39,7 @@ public class managerUI implements IusergroupUI {
         int choice;
         do{
             // Print UI
-            System.out.println("<< Viewing as applicant: " + username + " >>");
+            System.out.println("<< Logged in as manager: " + username + " >>");
             System.out.println(managerMenu);
             System.out.print("Input: ");
 

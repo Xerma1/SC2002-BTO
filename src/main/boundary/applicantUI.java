@@ -39,7 +39,7 @@ public class applicantUI implements IusergroupUI {
         int choice;
         do{
             // Print UI
-            System.out.println("<< Viewing as applicant: " + username + " >>");
+            System.out.println("<< Logged in as applicant: " + username + " >>");
             System.out.println(applicantMenu);
             System.out.print("Input: ");
             choice = scanner.nextInt();

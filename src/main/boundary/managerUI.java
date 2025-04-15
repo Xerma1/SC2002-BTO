@@ -33,7 +33,7 @@ public class managerUI implements IusergroupUI {
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
         
-            Manager Manager = new Manager(name, ID, age, married);
+            Manager manager = new Manager(name, ID, age, married);
        
         // Switch statement to process each option
         int choice;
@@ -48,7 +48,7 @@ public class managerUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    Manager.changePassword();
+                    manager.changePassword();
                 }
                 case 12 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

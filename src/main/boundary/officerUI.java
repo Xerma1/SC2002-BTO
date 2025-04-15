@@ -44,7 +44,7 @@ public class officerUI implements IusergroupUI {
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
         
-            Officer Officer = new Officer(name, ID, age, married);
+            Officer officer = new Officer(name, ID, age, married);
        
         // Switch statement to process each option
         int choice;
@@ -59,7 +59,7 @@ public class officerUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    Officer.changePassword();
+                    officer.changePassword();
                 }
                 case 16 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

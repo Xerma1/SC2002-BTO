@@ -33,7 +33,7 @@ public class applicantUI implements IusergroupUI {
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
 
-            Applicant Applicant = new Applicant(name, ID, age, married);
+            Applicant applicant = new Applicant(name, ID, age, married);
        
         // Switch statement to process each option
         int choice;
@@ -47,10 +47,10 @@ public class applicantUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    Applicant.changePassword();
+                    applicant.changePassword();
                 }
                 case 2 -> {
-                    IviewFilter viewInterface = viewFilterFactory.getViewFilter(Applicant.filterType);
+                    IviewFilter viewInterface = viewFilterFactory.getViewFilter(applicant.filterType);
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();

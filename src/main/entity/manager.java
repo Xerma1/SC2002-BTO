@@ -1,9 +1,9 @@
 package main.entity;
 
-public class manager extends user {
+public class Manager extends User {
 
     //constructor
-    public manager(String name, String userID, int age, boolean married) {
+    public Manager(String name, String userID, int age, boolean married) {
         super(name, userID, age, married);
         
     }

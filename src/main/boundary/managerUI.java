@@ -2,8 +2,8 @@ package main.boundary;
 
 import java.util.Scanner;
 import main.control.dataManager;
-import main.entity.manager;
-import main.entity.user;
+import main.entity.Manager;
+import main.entity.User;
 
 public class managerUI implements IusergroupUI {
 
@@ -27,13 +27,13 @@ public class managerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, String username, String userID) {
          // Create instance of manager class
-            user userdata = dataManager.getFetch(userID);
+            User userdata = dataManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
         
-            manager Manager = new manager(name, ID, age, married);
+            Manager Manager = new Manager(name, ID, age, married);
        
         // Switch statement to process each option
         int choice;

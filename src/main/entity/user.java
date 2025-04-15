@@ -3,7 +3,7 @@ package main.entity;
 import main.control.dataManager;
 import java.util.Scanner;
 
-public class user {
+public class User {
     private String name;
     private String userID;
     private int age;
@@ -12,7 +12,7 @@ public class user {
 
     //constructor
 
-    public user(String name, String userID, int age, boolean married) {
+    public User(String name, String userID, int age, boolean married) {
         this.name = name;
         this.userID = userID;
         this.age = age;

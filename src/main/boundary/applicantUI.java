@@ -4,8 +4,8 @@ import java.util.Scanner;
 import main.control.dataManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.viewFilterFactory;
-import main.entity.applicant;
-import main.entity.user;
+import main.entity.Applicant;
+import main.entity.User;
 
 public class applicantUI implements IusergroupUI {
 
@@ -27,13 +27,13 @@ public class applicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            user userdata = dataManager.getFetch(userID);
+            User userdata = dataManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
 
-            applicant Applicant = new applicant(name, ID, age, married);
+            Applicant Applicant = new Applicant(name, ID, age, married);
        
         // Switch statement to process each option
         int choice;

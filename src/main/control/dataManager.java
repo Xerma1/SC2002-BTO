@@ -6,25 +6,33 @@ import java.io.FileReader; //Used to open and read the file
 import java.io.FileWriter;
 import java.io.IOException; //Handles exceptions that may occur during file operations
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import main.entity.user;
+import main.entity.User;
 /*
  * This class's role is to handle on file read/write methods that the app uses
  * Current methods: utility read/write CSV, search(), getSearch(), changePassword(), 
  */
 
 public class dataManager {
+    // Constants for file paths and column indices
+    private static final String USERS_CSV_PATH = "data/processed/users.csv";
+    private static final int COL_NAME = 0;
+    private static final int COL_USER_ID = 1;
+    private static final int COL_AGE = 2;
+    private static final int COL_MARTIAL_STATUS = 3;
+    private static final int COL_PASSWORD = 4;
 
-    // Utility method to read CSV file
+    // Utility method to read CSV file. Return unmodifiable list of defensive copies
     public static List<String[]> readCSV(String filePath) throws IOException {
         List<String[]> rows = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                rows.add(line.split(",")); // Split each line into an array of strings
+                rows.add(line.split(",").clone()); // Defensive copy
             }
         }
-        return rows;
+        return Collections.unmodifiableList(rows); // Immutable outer list
     }
 
     // Utility method to write into CSV file
@@ -38,20 +46,20 @@ public class dataManager {
     }
 
     // Private method to fetch sensitive user data. 
-    private static user fetch(String userID) {
-        String filePath = "data/processed/users.csv"; // Path to the CSV file
+    private static User fetch(String userID) {
+        String filePath = USERS_CSV_PATH; // Path to the CSV file
 
         try {
             List<String[]> rows = readCSV(filePath); // Use utility method
             for (String[] values : rows) {
-                String storedUserID = values[1].trim(); // Second column: userID
+                String storedUserID = values[COL_USER_ID].trim(); // Second column: userID
                 if (storedUserID.equals(userID)) {
                     // Create and return a User object
-                    return new user(
-                        values[0].trim(), // Name
-                        values[1].trim(), // userID
-                        Integer.parseInt(values[2].trim()), // Age
-                        Boolean.parseBoolean(values[3].trim()) // Marital Status    
+                    return new User(
+                        values[COL_NAME].trim(), // Name
+                        values[COL_USER_ID].trim(), // userID
+                        Integer.parseInt(values[COL_AGE].trim()), // Age
+                        Boolean.parseBoolean(values[COL_MARTIAL_STATUS].trim()) // Marital Status    
                     );
                 }
             }
@@ -65,20 +73,20 @@ public class dataManager {
     }
 
     // Public method to allow other classes to call search()
-    public static user getFetch(String userID){
+    public static User getFetch(String userID){
         return dataManager.fetch(userID);
     }
 
     // Private method to change password
     private static void changePassword(String userID, String newPassword) {
-        String filePath = "data/processed/users.csv"; // Path to the CSV file
+        String filePath = USERS_CSV_PATH; // Path to the CSV file
         List<String[]> rows;
 
         try {
             rows = readCSV(filePath); // Use utility method
             for (String[] values : rows) {
-                if (values[1].trim().equals(userID)) { // Match userID
-                    values[4] = newPassword; // Update the password
+                if (values[COL_USER_ID].trim().equals(userID)) { // Match userID
+                    values[COL_PASSWORD] = newPassword; // Update the password
                 }
             }
         } catch (IOException e) {

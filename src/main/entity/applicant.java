@@ -1,11 +1,11 @@
 package main.entity;
 
-public class applicant extends user {
+public class Applicant extends User {
     //private applicantApplication application;
     public String filterType;
 
     //constructor
-    public applicant(String name, String userID, int age, boolean married) {
+    public Applicant(String name, String userID, int age, boolean married) {
         super(name, userID, age, married);
         if (married == true) filterType = "all";
         else filterType = "single";

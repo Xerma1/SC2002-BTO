@@ -44,7 +44,6 @@ public class btoApp {
                 };
             } catch (Exception e){
                 System.out.print("Invalid input. Please enter valid number. Input: ");
-                scanner.nextLine(); // Clear the invalid input
             }
         }  
 

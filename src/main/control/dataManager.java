@@ -54,12 +54,14 @@ public class dataManager {
             for (String[] values : rows) {
                 String storedUserID = values[COL_USER_ID].trim(); // Second column: userID
                 if (storedUserID.equals(userID)) {
+                    Boolean married = false;
+                    if (values[COL_MARTIAL_STATUS].trim().equalsIgnoreCase("Married")) married = true;
                     // Create and return a User object
                     return new User(
                         values[COL_NAME].trim(), // Name
                         values[COL_USER_ID].trim(), // userID
                         Integer.parseInt(values[COL_AGE].trim()), // Age
-                        Boolean.parseBoolean(values[COL_MARTIAL_STATUS].trim()) // Marital Status    
+                        married // Marital Status    
                     );
                 }
             }

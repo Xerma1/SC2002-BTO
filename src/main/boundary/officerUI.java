@@ -2,6 +2,7 @@ package main.boundary;
 
 import java.util.Scanner;
 import main.control.dataManager;
+import main.control.viewFilters.*;
 import main.entity.Officer;
 import main.entity.User;
 
@@ -60,6 +61,15 @@ public class officerUI implements IusergroupUI {
             switch (choice){
                 case 1 -> {
                     officer.changePassword();
+                }
+
+                case 2 -> {
+                    IviewFilter viewInterface = viewFilterFactory.getViewFilter("all");
+                    System.out.println("Showing all active projects: ");
+                    System.out.println();
+                    viewInterface.view();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 case 16 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

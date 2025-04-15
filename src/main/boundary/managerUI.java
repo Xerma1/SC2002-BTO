@@ -2,6 +2,7 @@ package main.boundary;
 
 import java.util.Scanner;
 import main.control.dataManager;
+import main.control.viewFilters.*;
 import main.entity.Manager;
 import main.entity.User;
 
@@ -50,6 +51,16 @@ public class managerUI implements IusergroupUI {
                 case 1 -> {
                     manager.changePassword();
                 }
+
+                case 2 -> {
+                    IviewFilter viewInterface = viewFilterFactory.getViewFilter("all");
+                    System.out.println("Showing all projects: ");
+                    System.out.println();
+                    viewInterface.view();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+
                 case 12 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }

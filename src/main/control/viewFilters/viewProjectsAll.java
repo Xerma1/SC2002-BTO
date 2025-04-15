@@ -9,8 +9,6 @@ public class viewProjectsAll implements IviewFilter {
 
     public void view(){
 
-        System.out.println("Showing all active projects available: ");
-        System.out.println();
         String filePath = "data/processed/projectList.csv";
 
         List<String[]> rows = null;
@@ -22,11 +20,19 @@ public class viewProjectsAll implements IviewFilter {
             e.printStackTrace();
         }
 
-        for (String[] project : rows){
-            String[] first10Elements = Arrays.copyOfRange(project, 0, Math.min(10, project.length));
-            System.out.println(String.join(", ", first10Elements));;
-        }
-        System.out.println();
+         // Print header
+         String[] headers = rows.get(0); // Assuming the first row contains headers
+         System.out.printf("%-15s %-15s %-10s %-10s %-10s %-10s %-10s %-10s %-15s %-15s %-10s%n",
+                 headers[0], headers[1], headers[2], "Amount", "Price", headers[5], "Amount", "Price", "Opening date", "Closing date", headers[10]);
+         System.out.println("=".repeat(140));
+ 
+         // Print remaining rows
+         for (int i = 1; i < rows.size(); i++) { // Skip the header row
+             String[] project = rows.get(i);
+             System.out.printf("%-15s %-15s %-10s %-10s %-10s %-10s %-10s %-10s %-15s %-15s %-10s%n",
+                     project[0], project[1], project[2], project[3], project[4], project[5], project[6], project[7], project[8], project[9], project[10]);
+         }
+         System.out.println();
     }
 
 }

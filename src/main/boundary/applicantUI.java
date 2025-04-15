@@ -5,6 +5,7 @@ import main.control.dataManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.viewFilterFactory;
 import main.entity.applicant;
+import main.entity.user;
 
 public class applicantUI implements IusergroupUI {
 
@@ -26,16 +27,12 @@ public class applicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            String[] userdata = dataManager.search(userID);
-            String name = userdata[0];
-            String ID = userdata[1];
-            int age = Integer.parseInt(userdata[2]);
-            boolean married;
-            if (userdata[3].equalsIgnoreCase("Married")){
-                married = true;
-            }
-            else married = false;
-        
+            user userdata = dataManager.getFetch(userID);
+            String name = userdata.getName();
+            String ID = userdata.getUserID();
+            int age = userdata.getAge();
+            boolean married = userdata.getMarried();
+
             applicant Applicant = new applicant(name, ID, age, married);
        
         // Switch statement to process each option
@@ -56,7 +53,7 @@ public class applicantUI implements IusergroupUI {
                     IviewFilter viewInterface = viewFilterFactory.getViewFilter(Applicant.filterType);
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
-                    String buffer = scanner.nextLine();
+                    scanner.nextLine();
                     }
                 
                 case 10 -> System.out.println("Exiting....");

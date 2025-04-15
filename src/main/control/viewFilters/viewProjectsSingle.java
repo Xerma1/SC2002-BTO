@@ -10,7 +10,7 @@ public class viewProjectsSingle implements IviewFilter {
 
     public void view(){
 
-        System.out.println("Showing all active projects available to you: ");
+        System.out.println("Showing all active projects available: ");
         System.out.println();
         String filePath = "data/processed/projectList.csv";
 

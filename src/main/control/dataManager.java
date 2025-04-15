@@ -7,9 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException; //Handles exceptions that may occur during file operations
 import java.util.ArrayList;
 import java.util.List;
+import main.entity.user;
 /*
  * This class's role is to handle on file read/write methods that the app uses
- * Current methods: utility read/write CSV, search(), changePassword(), 
+ * Current methods: utility read/write CSV, search(), getSearch(), changePassword(), 
  */
 
 public class dataManager {
@@ -36,8 +37,8 @@ public class dataManager {
         } 
     }
 
-    // Method to fetch user data
-    public static String[] search(String userID) {
+    // Private method to fetch sensitive user data. 
+    private static user fetch(String userID) {
         String filePath = "data/processed/users.csv"; // Path to the CSV file
 
         try {
@@ -45,7 +46,13 @@ public class dataManager {
             for (String[] values : rows) {
                 String storedUserID = values[1].trim(); // Second column: userID
                 if (storedUserID.equals(userID)) {
-                    return values; // Found
+                    // Create and return a User object
+                    return new user(
+                        values[0].trim(), // Name
+                        values[1].trim(), // userID
+                        Integer.parseInt(values[2].trim()), // Age
+                        Boolean.parseBoolean(values[3].trim()) // Marital Status    
+                    );
                 }
             }
         } catch (IOException e) {
@@ -57,8 +64,13 @@ public class dataManager {
         return null;
     }
 
-    // Method to change password
-    public static void changePassword(String userID, String newPassword) {
+    // Public method to allow other classes to call search()
+    public static user getFetch(String userID){
+        return dataManager.fetch(userID);
+    }
+
+    // Private method to change password
+    private static void changePassword(String userID, String newPassword) {
         String filePath = "data/processed/users.csv"; // Path to the CSV file
         List<String[]> rows;
 
@@ -84,6 +96,12 @@ public class dataManager {
         }
 
         System.out.println("Password updated successfully!");
+        
+    }
+
+    //Public method that calls changePassword
+    public static void getChangePassword(String userID, String newPassword){
+        dataManager.changePassword(userID, newPassword);
     }
 
 }

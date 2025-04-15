@@ -11,8 +11,6 @@ public class user {
     private static final Scanner scanner = new Scanner(System.in);
 
     //constructor
-    public user() {
-    }
 
     public user(String name, String userID, int age, boolean married) {
         this.name = name;
@@ -24,8 +22,22 @@ public class user {
     public void changePassword(){
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
-        dataManager.changePassword(userID, newPassword);
+        dataManager.getChangePassword(userID, newPassword);
+        System.out.println("Press 'enter' to continue...");
+        scanner.nextLine();
         
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getUserID(){
+        return userID;
+    }
+
+    public int getAge(){
+        return age;
     }
 
     public boolean getMarried(){

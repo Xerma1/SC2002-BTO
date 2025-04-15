@@ -3,6 +3,7 @@ package main.boundary;
 import java.util.Scanner;
 import main.control.dataManager;
 import main.entity.manager;
+import main.entity.user;
 
 public class managerUI implements IusergroupUI {
 
@@ -26,14 +27,11 @@ public class managerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, String username, String userID) {
          // Create instance of manager class
-            String[] userdata = dataManager.search(userID);
-            String name = userdata[0];
-            String ID = userdata[1];
-            int age = Integer.parseInt(userdata[2]);
-            boolean married = false;
-            if (userdata[3] == "Married"){
-                married = true;
-            }
+            user userdata = dataManager.getFetch(userID);
+            String name = userdata.getName();
+            String ID = userdata.getUserID();
+            int age = userdata.getAge();
+            boolean married = userdata.getMarried();
         
             manager Manager = new manager(name, ID, age, married);
        

@@ -37,7 +37,16 @@ public class DataManager {
         } 
     }
 
-    
+    // Utility method to append one line to CSV
+    public static void appendToCSV(String filePath, String[] dataRow) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            String csvLine = String.join(",", dataRow);
+            writer.write(csvLine);
+            writer.newLine(); // Adds the actual newline
+        } catch (IOException e) {
+            System.out.println("Error writing to CSV: " + e.getMessage());
+        }
+    }
 
 }
 

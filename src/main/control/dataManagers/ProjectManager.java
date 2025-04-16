@@ -2,10 +2,9 @@ package main.control.dataManagers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
-import main.control.viewFilters.IviewFilter;
-import main.control.viewFilters.ViewFilterFactory;
-import main.entity.Project;
+import main.entity.Applicant;
 
 public class ProjectManager extends DataManager {
     // Constants for file paths and column indices
@@ -35,9 +34,33 @@ public class ProjectManager extends DataManager {
         return rows;
     }
 
+    public static String askProjName(Scanner scanner) {
+        System.out.print("Which project would you like to apply for?: ");
+        return scanner.nextLine().trim();
+    }
+    
+    public static String askRoomType(Applicant applicant, Scanner scanner) {
+        if (!applicant.isMarried()) {
+            System.out.println("Applying for 2-room..."); // Singles default
+            return "2-room";
+        }
+
+        while (true) {
+            System.out.print("2-room or 3-room? (Enter 2 or 3): ");
+            if (scanner.hasNextInt()) {
+                int input = scanner.nextInt();
+                scanner.nextLine(); // Clear newline
+                if (input == 2) return "2-room";
+                if (input == 3) return "3-room";
+            } else {
+                scanner.nextLine(); // Clear invalid input
+            }
+            System.out.println("Invalid room type. Please enter 2 or 3.");
+        }
+    }
+
     public static List<String[]> getFetchAll(){
         return ProjectManager.fetchAll();
     }
-
 
 }

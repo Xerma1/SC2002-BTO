@@ -1,19 +1,9 @@
 package main.entity;
 
-import main.boundary.ApplicantUI;
-import main.boundary.ManagerUI;
-import main.boundary.OfficerUI;
-
 public class Application {
-    private User user;
+    private String username;
     private String projName;
-
-    private ApplicationType type;
-    public enum ApplicationType {
-        APPLICANT,
-        OFFICER,
-        MANAGER;
-    }
+    private String roomType;
 
     private ApplicationStatus status;
     public enum ApplicationStatus {
@@ -24,10 +14,10 @@ public class Application {
     }
 
     //constructor
-    Application(User user, String projName, ApplicationType type) {
-        this.user = user;
+    public Application(String username, String projName, String roomType) {
+        this.username = username;
         this.projName = projName;
-        this.type = type;
+        this.roomType = roomType;
         this.status = ApplicationStatus.PENDING;
     }
 

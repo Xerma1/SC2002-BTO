@@ -1,9 +1,11 @@
 package main.boundary;
 
 import main.control.dataManagers.UserManager;
+import main.control.dataManagers.ApplicationManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
+import main.entity.Application;
 import main.entity.User;
 
 import java.util.Scanner;
@@ -46,7 +48,7 @@ public class ApplicantUI implements IusergroupUI {
             choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice){
+            switch (choice) {
                 case 1 -> {
                     applicant.changePassword();
                 }
@@ -57,7 +59,16 @@ public class ApplicantUI implements IusergroupUI {
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
+                }
+                case 3 -> {
+                    Application application = ApplicationManager.applyBTO(applicant, scanner);
+                    if (application == null) {
+                        System.out.println("Failed to apply.");
+                    } else {
+                        System.out.println("Applied successfully!");
                     }
+                    System.out.println();
+                }
                 
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

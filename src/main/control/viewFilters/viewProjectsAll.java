@@ -6,7 +6,7 @@ import java.util.List;
 
 import main.control.DataManager;
 
-public class viewProjectsAll implements IviewFilter {
+public class ViewProjectsAll implements IviewFilter {
 
     public void view(){
 

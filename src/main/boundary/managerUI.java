@@ -54,7 +54,7 @@ public class managerUI implements IusergroupUI {
                 }
 
                 case 2 -> {
-                    IviewFilter viewInterface = viewFilterFactory.getViewFilter("all");
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
                     System.out.println("Showing all projects: ");
                     System.out.println();
                     viewInterface.view();

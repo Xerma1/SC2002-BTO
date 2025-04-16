@@ -65,7 +65,7 @@ public class officerUI implements IusergroupUI {
                 }
 
                 case 2 -> {
-                    IviewFilter viewInterface = viewFilterFactory.getViewFilter("all");
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
                     System.out.println("Showing all active projects: ");
                     System.out.println();
                     viewInterface.view();

@@ -1,11 +1,12 @@
 package main.control;
 
-import java.time.LocalDate; // LocalDate class to work with dates
-import java.time.LocalDateTime; // LocalDateTime class to work with dates and time
-import java.time.format.DateTimeFormatter; // Formats date and time
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; // Handles date and time formatting
 import java.time.format.DateTimeParseException; // Handles exceptions that may occur during date parsing
 
-public class timeManager {
+// Uses local timezone for simplicity
+public class TimeManager {
     public static String timeNow() {
         LocalDateTime date = LocalDateTime.now(); // Get current date and time
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); // Defining format of date and time
@@ -18,10 +19,10 @@ public class timeManager {
         LocalDate date = LocalDate.now(); 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Defining format of date and time
         try {
-            LocalDate open = LocalDate.parse(openDate, format); // Parsing openDate
-            LocalDate close = LocalDate.parse(closeDate, format); // Parsing closeDate
+            LocalDate open = LocalDate.parse(openDate, format); // Changing openDate from String to LocalDate
+            LocalDate close = LocalDate.parse(closeDate, format); // Changing endDate from String to LocalDate
 
-            return !(date.isBefore(open) || date.isAfter(close)); // Returns true if within date range inclusive
+            return !(date.isBefore(open) || date.isAfter(close)); // Returns true if current date is within range inclusive
 
         } catch (DateTimeParseException e) { // Handles exceptions that may occur during date parsing
             System.out.println("Invalid date format. Please use 'dd/MM/yyyy'.");

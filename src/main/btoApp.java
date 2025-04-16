@@ -3,13 +3,14 @@ package main;
 import main.control.InvalidLoginException;
 import main.control.DataManager;
 import main.control.LoginManager;
-import main.control.usergroupUIFactory;
+import main.control.UsergroupUIFactory;
 import main.entity.User;
-
-import java.util.Scanner;
 import main.boundary.*;
 
-public class btoApp {
+import java.util.Scanner;
+
+
+public class BtoApp {
     
     private static final String UI = """
             Welcome to BTO application manager!
@@ -86,7 +87,7 @@ public class btoApp {
         String username = userdata.getName();
         
         // Run menu based on the usergroup using dependency injection
-        IusergroupUI userUI = usergroupUIFactory.getUI(usergroup);
+        IusergroupUI userUI = UsergroupUIFactory.getUI(usergroup);
         userUI.runMenu(scanner, username, userID);
 
         scanner.close();

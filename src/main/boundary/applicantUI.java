@@ -2,13 +2,13 @@ package main.boundary;
 
 import main.control.DataManager;
 import main.control.viewFilters.IviewFilter;
-import main.control.viewFilters.viewFilterFactory;
+import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
 import main.entity.User;
 
 import java.util.Scanner;
 
-public class applicantUI implements IusergroupUI {
+public class ApplicantUI implements IusergroupUI {
 
      private static final String applicantMenu = """
                 
@@ -51,7 +51,7 @@ public class applicantUI implements IusergroupUI {
                     applicant.changePassword();
                 }
                 case 2 -> {
-                    IviewFilter viewInterface = viewFilterFactory.getViewFilter(applicant.filterType);
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
                     System.out.println("Showing all active projects available to you: ");
                     System.out.println();
                     viewInterface.view();

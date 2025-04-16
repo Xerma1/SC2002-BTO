@@ -90,7 +90,13 @@ public class DataManager {
             rows = readCSV(filePath); // Use utility method
             for (String[] values : rows) {
                 if (values[COL_USER_ID].trim().equals(userID)) { // Match userID
-                    values[COL_PASSWORD] = newPassword; // Update the password
+                    if (values[COL_PASSWORD].trim().equals(newPassword)) { // Check if new password is the same as old password
+                        System.out.println("New password cannot be the same as the old password.");
+                        return;
+                    } else {
+                        values[COL_PASSWORD] = newPassword; // Update the password
+                        
+                    }
                 }
             }
         } catch (IOException e) {

@@ -7,7 +7,7 @@ import main.entity.User;
 
 import java.util.Scanner;
 
-public class managerUI implements IusergroupUI {
+public class ManagerUI implements IusergroupUI {
 
     private static final String managerMenu = """
                 
@@ -54,7 +54,7 @@ public class managerUI implements IusergroupUI {
                 }
 
                 case 2 -> {
-                    IviewFilter viewInterface = viewFilterFactory.getViewFilter("all");
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
                     System.out.println("Showing all projects: ");
                     System.out.println();
                     viewInterface.view();

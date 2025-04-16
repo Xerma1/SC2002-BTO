@@ -2,7 +2,7 @@ package main.entity;
 
 import java.util.Map;
 
-public class project {
+public class Project {
     private String projectName;
     private String neighbourhood;
     private Map<String, Integer> flatTypes; // Map of flat types and their respective counts
@@ -14,7 +14,7 @@ public class project {
     private boolean visibility; // True if project is open for application, false otherwise 
 
     //constructor
-    public project() {
+    public Project() {
     }
 
 }

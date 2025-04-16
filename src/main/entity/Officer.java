@@ -1,6 +1,6 @@
 package main.entity;
 
-public class Officer extends User {
+public class Officer extends Applicant {
     private boolean hasActiveProj;
 
     //constructor

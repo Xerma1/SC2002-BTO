@@ -19,10 +19,9 @@ public class ApplicationManager {
     private static final String APPL_CSV_PATH = "data/processed/bto_applications.csv";
 
     
-    public static Application applyBTO(User user, Scanner scanner) { // Writes an application to bto_applications.csv
+    public static Application applyBTO(Applicant applicant, Scanner scanner) { // Writes an application to bto_applications.csv
         String filePath = APPL_CSV_PATH; // Path to the CSV file
 
-        Applicant applicant = (Applicant) user; // Downcasting
         IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
         List<String[]> validProjects = viewInterface.getFilter(); // Gets valid projects based on filter
 

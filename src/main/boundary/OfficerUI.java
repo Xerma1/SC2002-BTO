@@ -1,7 +1,9 @@
 package main.boundary;
 
+import main.control.dataManagers.ApplicationManager;
 import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
+import main.entity.Application;
 import main.entity.Officer;
 import main.entity.User;
 
@@ -65,17 +67,27 @@ public class OfficerUI implements IusergroupUI {
                 }
 
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
                     System.out.println("Showing all active projects: ");
                     System.out.println();
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
+
+                case 9 -> {
+                    Application application = ApplicationManager.applyBTO(officer, scanner);
+                    if (application == null) {
+                        System.out.println("Failed to apply.");
+                    } else {
+                        System.out.println("Applied successfully!");
+                    }
+                    System.out.println();
+                }
                 case 16 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
-        }while (choice != 16);
+        } while (choice != 16);
         
     }
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import main.control.dataManager;
+import main.control.DataManager;
 
 public class viewProjectsSingle implements IviewFilter {
 
@@ -14,7 +14,7 @@ public class viewProjectsSingle implements IviewFilter {
 
         List<String[]> rows = null;
         try {
-            rows = dataManager.readCSV(filePath); // Use utility method
+            rows = DataManager.readCSV(filePath); // Use utility method
             
         } catch (IOException e) {
             System.err.println("Error reading file: " + filePath);

@@ -1,10 +1,11 @@
 package main;
 
 import main.control.InvalidLoginException;
-import main.control.dataManager;
-import main.control.loginManager;
+import main.control.DataManager;
+import main.control.LoginManager;
 import main.control.usergroupUIFactory;
 import main.entity.User;
+
 import java.util.Scanner;
 import main.boundary.*;
 
@@ -39,7 +40,7 @@ public class btoApp {
                     case 3 -> "manager";
                     default -> {
                         System.out.print("Invalid input. Try again. Input: ");
-                        yield ""; //Exit the switch with an empty string after printing error message
+                        yield ""; // Exit the switch with an empty string after printing error message
                     }   
                 };
             } catch (Exception e){
@@ -64,7 +65,7 @@ public class btoApp {
                 System.out.print("Enter password: ");
                 String password = scanner.nextLine();
 
-                isLoggedIn = loginManager.login(userID, password, usergroup);
+                isLoggedIn = LoginManager.login(userID, password, usergroup);
                 
                 } catch (InvalidLoginException e) {
                     System.out.println(e.getMessage()); // Print the custom exception message
@@ -80,8 +81,8 @@ public class btoApp {
         System.out.println("Login successful!");
         System.out.println("");
         
-        //Get the username associated with the userID to be passed into userUI.printUI()
-        User userdata = dataManager.getFetch(userID);
+        // Get the username associated with the userID to be passed into userUI.printUI()
+        User userdata = DataManager.getFetch(userID);
         String username = userdata.getName();
         
         // Run menu based on the usergroup using dependency injection

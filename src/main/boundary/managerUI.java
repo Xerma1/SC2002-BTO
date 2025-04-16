@@ -1,10 +1,11 @@
 package main.boundary;
 
-import java.util.Scanner;
-import main.control.dataManager;
+import main.control.DataManager;
 import main.control.viewFilters.*;
 import main.entity.Manager;
 import main.entity.User;
+
+import java.util.Scanner;
 
 public class managerUI implements IusergroupUI {
 
@@ -28,7 +29,7 @@ public class managerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, String username, String userID) {
          // Create instance of manager class
-            User userdata = dataManager.getFetch(userID);
+            User userdata = DataManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();

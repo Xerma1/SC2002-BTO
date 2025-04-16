@@ -52,7 +52,6 @@ public class ApplicantUI implements IusergroupUI {
                 }
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
-                    System.out.println(applicant.filterType);
                     System.out.println("Showing all active projects available to you: ");
                     System.out.println();
                     viewInterface.view();

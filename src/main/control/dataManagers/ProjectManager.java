@@ -3,6 +3,8 @@ package main.control.dataManagers;
 import java.io.IOException;
 import java.util.List;
 
+import main.control.viewFilters.IviewFilter;
+import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Project;
 
 public class ProjectManager extends DataManager {
@@ -20,7 +22,7 @@ public class ProjectManager extends DataManager {
     private static final int COL_CLOSE_DATE = 9;
 
     // Private method to fetch sensitive project data. 
-    private static List<String[]> fetch() {
+    private static List<String[]> fetchAll() {
         List<String[]> rows = null;
         try {
             rows = DataManager.readCSV(PROJ_CSV_PATH); // Use utility method
@@ -33,7 +35,9 @@ public class ProjectManager extends DataManager {
         return rows;
     }
 
-    public static List<String[]> getFetch(){
-        return ProjectManager.fetch();
+    public static List<String[]> getFetchAll(){
+        return ProjectManager.fetchAll();
     }
+
+
 }

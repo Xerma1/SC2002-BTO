@@ -3,11 +3,12 @@ package main.control.viewFilters;
 import main.control.dataManagers.ProjectManager;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ViewAll implements IviewFilter {
 
     public void view() {
-        List<String[]> rows = ProjectManager.getFetch();
+        List<String[]> rows = ProjectManager.getFetchAll();
 
         // Print header
         String[] headers = rows.get(0); // Assuming the first row contains headers
@@ -24,6 +25,18 @@ public class ViewAll implements IviewFilter {
             }
         }
         System.out.println();
+    }
+
+    public List<String[]> getFilter() {
+        List<String[]> rows = ProjectManager.getFetchAll();
+
+        List<String[]> validProjects = new ArrayList<>();
+        for (String[] values : rows) {
+            if (!(values[3].trim().equals("0") && values[5].trim().equals("0"))) {
+                validProjects.add(values);
+            }
+        }
+        return validProjects;
     }
 
 }

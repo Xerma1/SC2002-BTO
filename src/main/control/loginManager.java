@@ -4,7 +4,7 @@ import java.io.BufferedReader; //Used to read text from a file line by line
 import java.io.FileReader; //Used to open and read the file
 import java.io.IOException; //Handles exceptions that may occur during file operations
 
-public class loginManager {
+public class LoginManager {
     
     // Login function that checks whether the given username and password matches
     public static boolean login(String userID, String password, String usergroup) throws InvalidLoginException {

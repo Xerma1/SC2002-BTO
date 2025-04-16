@@ -1,20 +1,22 @@
 package main.control;
 
-import java.io.BufferedReader; //Used to read text from a file line by line
+import main.entity.User;
+
+import java.io.BufferedReader; // Used to read text from a file line by line
 import java.io.BufferedWriter;
-import java.io.FileReader; //Used to open and read the file
+import java.io.FileReader; // Used to open and read the file
 import java.io.FileWriter;
-import java.io.IOException; //Handles exceptions that may occur during file operations
+import java.io.IOException; // Handles exceptions that may occur during file operations
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import main.entity.User;
+
 /*
  * This class's role is to handle on file read/write methods that the app uses
  * Current methods: utility read/write CSV, search(), getSearch(), changePassword(), 
  */
 
-public class dataManager {
+public class DataManager {
     // Constants for file paths and column indices
     private static final String USERS_CSV_PATH = "data/processed/users.csv";
     private static final int COL_NAME = 0;
@@ -76,7 +78,7 @@ public class dataManager {
 
     // Public method to allow other classes to call search()
     public static User getFetch(String userID){
-        return dataManager.fetch(userID);
+        return DataManager.fetch(userID);
     }
 
     // Private method to change password
@@ -109,9 +111,9 @@ public class dataManager {
         
     }
 
-    //Public method that calls changePassword
+    // Public method that calls changePassword
     public static void getChangePassword(String userID, String newPassword){
-        dataManager.changePassword(userID, newPassword);
+        DataManager.changePassword(userID, newPassword);
     }
 
 }

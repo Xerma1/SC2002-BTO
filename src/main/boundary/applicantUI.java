@@ -1,11 +1,12 @@
 package main.boundary;
 
-import java.util.Scanner;
-import main.control.dataManager;
+import main.control.DataManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.viewFilterFactory;
 import main.entity.Applicant;
 import main.entity.User;
+
+import java.util.Scanner;
 
 public class applicantUI implements IusergroupUI {
 
@@ -27,7 +28,7 @@ public class applicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            User userdata = dataManager.getFetch(userID);
+            User userdata = DataManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();

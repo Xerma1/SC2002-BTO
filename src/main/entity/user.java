@@ -1,6 +1,7 @@
 package main.entity;
 
-import main.control.dataManager;
+import main.control.DataManager;
+
 import java.util.Scanner;
 
 public class User {
@@ -11,7 +12,6 @@ public class User {
     private static final Scanner scanner = new Scanner(System.in);
 
     //constructor
-
     public User(String name, String userID, int age, boolean married) {
         this.name = name;
         this.userID = userID;
@@ -22,7 +22,7 @@ public class User {
     public void changePassword(){
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
-        dataManager.getChangePassword(userID, newPassword);
+        DataManager.getChangePassword(userID, newPassword);
         System.out.println("Press 'enter' to continue...");
         scanner.nextLine();
         

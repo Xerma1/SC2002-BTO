@@ -25,6 +25,9 @@ public class ManagerUI implements IusergroupUI {
                 12. Exit
 
                 """;
+    public void changePassword(string s, string p){
+        DataManager.changePassword(s, p);
+    }
 
     @Override
     public void runMenu(Scanner scanner, String username, String userID) {

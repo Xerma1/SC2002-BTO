@@ -1,9 +1,11 @@
 package main.boundary;
 
-import main.control.DataManager;
+import main.control.dataManagers.UserManager;
+import main.control.dataManagers.ApplicationManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
+import main.entity.Application;
 import main.entity.User;
 
 import java.util.Scanner;
@@ -28,7 +30,7 @@ public class ApplicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            User userdata = DataManager.getFetch(userID);
+            User userdata = UserManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
@@ -46,7 +48,7 @@ public class ApplicantUI implements IusergroupUI {
             choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice){
+            switch (choice) {
                 case 1 -> {
                     applicant.changePassword();
                 }
@@ -57,7 +59,15 @@ public class ApplicantUI implements IusergroupUI {
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
+                }
+                case 3 -> {
+                    if (ApplicationManager.applyBTO(applicant, scanner)) {
+                        System.out.println("Applied successfully!");
+                    } else {
+                        System.out.println("Failed to apply.");
                     }
+                    System.out.println();
+                }
                 
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

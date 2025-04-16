@@ -1,8 +1,8 @@
 package main.entity;
 
-import main.control.DataManager;
-
 import java.util.Scanner;
+
+import main.control.dataManagers.UserManager;
 
 public class User {
     private String name;
@@ -22,7 +22,7 @@ public class User {
     public void changePassword(){
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
-        DataManager.getChangePassword(userID, newPassword);
+        UserManager.getChangePassword(userID, newPassword);
         System.out.println("Press 'enter' to continue...");
         scanner.nextLine();
         

@@ -1,9 +1,3 @@
-Name,NRIC,Age,Marital Status,applied project,application status,
-John,S1234567A,35,Single
-Sarah,T7654321B,40,Married
-Grace,S9876543C,37,Married
-James,T2345678D,30,Married
-Rachel,S3456789E,25,Single
-Daniel,T2109876H,36,Single
-Emily,S6543210I,28,Single
-David,T1234567J,29,Married
+Name,NRIC,Age,Marital Status,applied project,room type,application status,
+John,S1234567A,35,Single,Acacia Breeze,2-room,PENDING
+David,T1234567J,29,Married,Sandy Heights,3-room,PENDING

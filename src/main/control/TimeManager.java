@@ -16,7 +16,7 @@ public class TimeManager {
     public static boolean isValidDate(String openDate, String closeDate) {
         // Checks if the current date now is within openDate and closeDate
         LocalDate date = LocalDate.now(); 
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Defining format of date and time
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yyyy"); // Defining format of date and time
         try {
             LocalDate open = LocalDate.parse(openDate, format); // Changing openDate from String to LocalDate
             LocalDate close = LocalDate.parse(closeDate, format); // Changing endDate from String to LocalDate
@@ -24,7 +24,7 @@ public class TimeManager {
             return !(date.isBefore(open) || date.isAfter(close)); // Returns true if current date is within range inclusive
 
         } catch (DateTimeParseException e) { // Handles exceptions that may occur during date parsing
-            System.out.println("Invalid date format. Please use 'dd/MM/yyyy'.");
+            System.out.println("Invalid date format. Please use 'M/d/yyyy'.");
             return false;
         }
     }

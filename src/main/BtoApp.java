@@ -1,9 +1,9 @@
 package main;
 
 import main.control.InvalidLoginException;
-import main.control.DataManager;
 import main.control.LoginManager;
 import main.control.UsergroupUIFactory;
+import main.control.dataManagers.UserManager;
 import main.entity.User;
 import main.boundary.*;
 
@@ -83,7 +83,7 @@ public class BtoApp {
         System.out.println("");
         
         // Get the username associated with the userID to be passed into userUI.printUI()
-        User userdata = DataManager.getFetch(userID);
+        User userdata = UserManager.getFetch(userID);
         String username = userdata.getName();
         
         // Run menu based on the usergroup using dependency injection

@@ -1,7 +1,9 @@
 package main.boundary;
 
-import main.control.DataManager;
+import main.control.dataManagers.ApplicationManager;
+import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
+import main.entity.Application;
 import main.entity.Officer;
 import main.entity.User;
 
@@ -40,7 +42,7 @@ public class OfficerUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of manager class
-            User userdata = DataManager.getFetch(userID);
+            User userdata = UserManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
@@ -65,17 +67,26 @@ public class OfficerUI implements IusergroupUI {
                 }
 
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
+                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
                     System.out.println("Showing all active projects: ");
                     System.out.println();
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
+
+                case 9 -> {
+                    if (ApplicationManager.applyBTO(officer, scanner)) {
+                        System.out.println("Applied successfully!");
+                    } else {
+                        System.out.println("Failed to apply.");
+                    }
+                    System.out.println();
+                }
                 case 16 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
-        }while (choice != 16);
+        } while (choice != 16);
         
     }
 

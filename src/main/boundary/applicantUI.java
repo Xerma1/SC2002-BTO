@@ -8,7 +8,7 @@ import main.entity.User;
 
 import java.util.Scanner;
 
-public class applicantUI implements IusergroupUI {
+public class ApplicantUI implements IusergroupUI {
 
      private static final String applicantMenu = """
                 

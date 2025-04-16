@@ -7,7 +7,7 @@ import main.entity.User;
 
 import java.util.Scanner;
 
-public class managerUI implements IusergroupUI {
+public class ManagerUI implements IusergroupUI {
 
     private static final String managerMenu = """
                 

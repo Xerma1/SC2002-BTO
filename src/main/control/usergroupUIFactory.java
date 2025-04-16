@@ -5,9 +5,9 @@ import main.boundary.*;
 public class UsergroupUIFactory {
     public static IusergroupUI getUI(String usergroup) {
         return switch (usergroup) {
-            case "applicant" -> new applicantUI();
-            case "officer" -> new officerUI();
-            case "manager" -> new managerUI();
+            case "applicant" -> new ApplicantUI();
+            case "officer" -> new OfficerUI();
+            case "manager" -> new ManagerUI();
             default -> throw new IllegalArgumentException("Invalid usergroup: " + usergroup);
         };
     }

@@ -61,11 +61,10 @@ public class ApplicantUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 3 -> {
-                    Application application = ApplicationManager.applyBTO(applicant, scanner);
-                    if (application == null) {
-                        System.out.println("Failed to apply.");
-                    } else {
+                    if (ApplicationManager.applyBTO(applicant, scanner)) {
                         System.out.println("Applied successfully!");
+                    } else {
+                        System.out.println("Failed to apply.");
                     }
                     System.out.println();
                 }

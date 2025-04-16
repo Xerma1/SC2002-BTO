@@ -19,7 +19,7 @@ public class ApplicationManager {
     private static final String APPL_CSV_PATH = "data/processed/bto_applications.csv";
 
     
-    public static Application applyBTO(Applicant applicant, Scanner scanner) { // Writes an application to bto_applications.csv
+    public static boolean applyBTO(Applicant applicant, Scanner scanner) { // Writes an application to bto_applications.csv
         String filePath = APPL_CSV_PATH; // Path to the CSV file
 
         IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
@@ -40,7 +40,7 @@ public class ApplicationManager {
         }
         if (!foundValidProject) { // Project name not found
             System.out.println("Project is not available.");
-            return null;
+            return false;
         }
 
         // Asking for room type
@@ -50,13 +50,13 @@ public class ApplicationManager {
         // Check room availability
         if ("0".equals(validProject[roomIndex].trim())) {
             System.out.println("No vacancies.");
-            return null;
+            return false;
         }
 
         // Checking if application is active
         if (!TimeManager.isValidDate(validProject[8].trim(), validProject[9].trim())) {
             System.out.println("Project not active.");
-            return null;
+            return false;
         }
 
         // Checking if user has already applied for project
@@ -64,23 +64,17 @@ public class ApplicationManager {
         try {
             applications = DataManager.readCSV(filePath);
             for (String[] values : applications) {
-                if (values[1].trim().equals(applicant.getUserID()) &&
-                    values[4].trim().equalsIgnoreCase(projName.trim()) && 
-                    values[5].trim().equals(roomType.trim())) {
+                if (values[1].trim().equals(applicant.getUserID())) {
                     System.out.println("You have already applied for this project.");
-                    return null;
+                    return false;
                 }
             }
         } catch (IOException e) {
             System.out.println("An error occurred while reading applications: " + e.getMessage());
-            return null;
+            return false;
         }
 
-        // Making application
-        Application application = new Application(applicant.getName(), projName, roomType);
-        // TODO: Assign application to applicant?
-
-        // Writing application to CSV file
+        // Writing application back to CSV file
         String[] newApplication = {
             applicant.getName(),
             applicant.getUserID(),
@@ -92,7 +86,7 @@ public class ApplicationManager {
         };
         DataManager.appendToCSV(APPL_CSV_PATH, newApplication);
         
-        return application;
+        return true;
     }
 }
 

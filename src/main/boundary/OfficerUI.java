@@ -76,11 +76,10 @@ public class OfficerUI implements IusergroupUI {
                 }
 
                 case 9 -> {
-                    Application application = ApplicationManager.applyBTO(officer, scanner);
-                    if (application == null) {
-                        System.out.println("Failed to apply.");
-                    } else {
+                    if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
+                    } else {
+                        System.out.println("Failed to apply.");
                     }
                     System.out.println();
                 }

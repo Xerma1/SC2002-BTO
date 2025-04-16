@@ -81,7 +81,8 @@ public class OfficerUI implements IusergroupUI {
                     } else {
                         System.out.println("Failed to apply.");
                     }
-                    System.out.println();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 case 16 -> System.out.println("Exiting....");
                 default -> System.out.print("default");

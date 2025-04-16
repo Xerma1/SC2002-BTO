@@ -66,7 +66,9 @@ public class ApplicantUI implements IusergroupUI {
                     } else {
                         System.out.println("Failed to apply.");
                     }
-                    System.out.println();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                    
                 }
                 
                 case 10 -> System.out.println("Exiting....");

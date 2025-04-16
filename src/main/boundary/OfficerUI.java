@@ -1,6 +1,6 @@
 package main.boundary;
 
-import main.control.DataManager;
+import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
 import main.entity.Officer;
 import main.entity.User;
@@ -40,7 +40,7 @@ public class OfficerUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of manager class
-            User userdata = DataManager.getFetch(userID);
+            User userdata = UserManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();

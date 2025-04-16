@@ -1,6 +1,6 @@
 package main.boundary;
 
-import main.control.DataManager;
+import main.control.dataManagers.UserManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
@@ -28,7 +28,7 @@ public class ApplicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            User userdata = DataManager.getFetch(userID);
+            User userdata = UserManager.getFetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
@@ -52,6 +52,7 @@ public class ApplicantUI implements IusergroupUI {
                 }
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
+                    System.out.println(applicant.filterType);
                     System.out.println("Showing all active projects available to you: ");
                     System.out.println();
                     viewInterface.view();

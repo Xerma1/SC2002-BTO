@@ -13,7 +13,6 @@ public class TimeManager {
         String formattedDate = date.format(format); // Applying format to date
         return formattedDate;
     }
-
     public static boolean isValidDate(String openDate, String closeDate) {
         // Checks if the current date now is within openDate and closeDate
         LocalDate date = LocalDate.now(); 

@@ -28,8 +28,9 @@ public class UserManager extends DataManager {
             if (user[COL_USER_ID].equals(userID)) { // Find user using userID   
                 String name = user[COL_NAME];
                 int age = Integer.parseInt(user[COL_AGE]);
-                boolean married = Boolean.parseBoolean(user[COL_MARTIAL_STATUS]);                    
-                return new User(name, userID, age, married); // Return User object
+                boolean married = Boolean.parseBoolean(user[COL_MARTIAL_STATUS]); 
+                String password = user[COL_PASSWORD];                   
+                return new User(name, userID, age, married, password); // Return User object
             } else {
                 System.out.println("User not found.");
             }

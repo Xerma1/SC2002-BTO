@@ -29,7 +29,7 @@ public class ManagerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, String username, String userID) {
          // Create instance of manager class
-            User userdata = UserManager.getFetch(userID);
+            User userdata = UserManager.fetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();

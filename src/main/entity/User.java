@@ -9,14 +9,15 @@ public class User {
     private String userID;
     private int age;
     private boolean married;
-    private String password = "password";
+    private String password;
 
     //constructor
-    public User(String name, String userID, int age, boolean married) {
+    public User(String name, String userID, int age, boolean married, String password) {
         this.name = name;
         this.userID = userID;
         this.age = age;
         this.married = married;
+        this.password = password;
     }
 
     public void changePassword(Scanner scanner) {
@@ -47,4 +48,7 @@ public class User {
         return married;
     }
 
+    public String getPassword(){
+        return password;
+    }
 }

@@ -29,12 +29,11 @@ public class ApplicantUI implements IusergroupUI {
     public void runMenu(Scanner scanner, String username, String userID) {
 
         // Create instance of applicant class
-            User userdata = UserManager.getFetch(userID);
+            User userdata = UserManager.fetch(userID);
             String name = userdata.getName();
             String ID = userdata.getUserID();
             int age = userdata.getAge();
             boolean married = userdata.getMarried();
-
             Applicant applicant = new Applicant(name, ID, age, married);
        
         // Switch statement to process each option

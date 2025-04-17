@@ -50,9 +50,10 @@ public class ManagerUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    manager.changePassword();
+                    manager.changePassword(scanner);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
-
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
                     System.out.println("Showing all projects: ");
@@ -61,7 +62,6 @@ public class ManagerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-
                 case 12 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }

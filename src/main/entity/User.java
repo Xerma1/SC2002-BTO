@@ -9,7 +9,7 @@ public class User {
     private String userID;
     private int age;
     private boolean married;
-    private static final Scanner scanner = new Scanner(System.in);
+    private String password;
 
     //constructor
     public User(String name, String userID, int age, boolean married) {
@@ -17,15 +17,19 @@ public class User {
         this.userID = userID;
         this.age = age;
         this.married = married;
+        this.password = "password";
     }
 
-    public void changePassword(){
+    public void changePassword(Scanner scanner) {
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
-        UserManager.getChangePassword(userID, newPassword);
-        System.out.println("Press 'enter' to continue...");
-        scanner.nextLine();
-        
+        if (newPassword == password) {
+            System.out.println("New password cannot be the same as the old password.");
+            return;
+        }
+        this.password = newPassword.trim();
+        System.out.println("Password changed successfully.");    
+        UserManager.writePassword(userID, newPassword);
     }
 
     public String getName(){
@@ -43,7 +47,5 @@ public class User {
     public boolean getMarried(){
         return married;
     }
-    //public void setFilter(ViewFilter f){}
-
 
 }

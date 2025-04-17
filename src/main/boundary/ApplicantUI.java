@@ -49,7 +49,9 @@ public class ApplicantUI implements IusergroupUI {
 
             switch (choice) {
                 case 1 -> {
-                    applicant.changePassword();
+                    applicant.changePassword(scanner);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);

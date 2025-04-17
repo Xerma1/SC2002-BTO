@@ -62,7 +62,9 @@ public class OfficerUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    officer.changePassword();
+                    officer.changePassword(scanner);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);

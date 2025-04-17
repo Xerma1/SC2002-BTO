@@ -15,14 +15,11 @@ public class UserManager extends DataManager {
     private static final int COL_PASSWORD = 4;
 
     // Private method to fetch sensitive user data. 
-    private static User fetch(String userID) {
-        String filePath = USERS_CSV_PATH; // Path to the CSV file
-
+    private static User _fetch(String userID) {
         try {
-            List<String[]> rows = readCSV(filePath); // Use utility method
-            for (String[] values : rows) {
-                String storedUserID = values[COL_USER_ID].trim(); // Second column: userID
-                if (storedUserID.equals(userID)) {
+            List<String[]> users = readCSV(USERS_CSV_PATH);
+            for (String[] user : users) {
+                if (user[COL_USER_ID].equals(userID)) { // If find user using userID
                     Boolean married = false;
                     if (values[COL_MARTIAL_STATUS].trim().equalsIgnoreCase("Married")) married = true;
                     // Create and return a User object
@@ -48,45 +45,36 @@ public class UserManager extends DataManager {
         return UserManager.fetch(userID);
     }
 
-    // Private method to change password
-    private static void changePassword(String userID, String newPassword) {
-        String filePath = USERS_CSV_PATH; // Path to the CSV file
-        List<String[]> rows;
-
+    // Private method to write password to file
+    private static void _writePassword(String userID, String newPassword) {
+        List<String[]> users;
         try {
-            rows = readCSV(filePath); // Use utility method
-            for (String[] values : rows) {
-                if (values[COL_USER_ID].trim().equals(userID)) { // Match userID
-                    if (values[COL_PASSWORD].trim().equals(newPassword)) { // Check if new password is the same as old password
-                        System.out.println("New password cannot be the same as the old password.");
-                        return;
-                    } else {
-                        values[COL_PASSWORD] = newPassword; // Update the password
-                        
-                    }
-                }
-            }
+            users = readCSV(USERS_CSV_PATH); // Use utility method
         } catch (IOException e) {
-            System.err.println("Error reading file: " + filePath);
+            System.err.println("Error reading file: " + USERS_CSV_PATH);
             e.printStackTrace();
             return;
         }
 
-        // Write updated rows back to the file
-        try {
-            writeCSV(filePath, rows);
-        } catch (IOException e) {
-            System.err.println("Error writing to file: " + filePath);
-            e.printStackTrace();
+        for (String[] user : users) {
+            if (user[COL_USER_ID].trim().equals(userID)) { // Match userID
+                    user[COL_PASSWORD] = newPassword; // Update the password
+                }
         }
 
-        System.out.println("Password updated successfully!");
-        
+        // Write updated rows back to the file
+        // TODO: update single line instead of rewriting the whole file
+        try {
+            writeCSV(USERS_CSV_PATH, users);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + USERS_CSV_PATH);
+            e.printStackTrace();
+        }
     }
 
-    // Public method that calls changePassword
-    public static void getChangePassword(String userID, String newPassword){
-        UserManager.changePassword(userID, newPassword);
+    // Public method that calls writePassword
+    public static void writePassword(String userID, String newPassword) {
+        UserManager._writePassword(userID, newPassword);
     }
 }
 

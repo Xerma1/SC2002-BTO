@@ -14,35 +14,32 @@ public class UserManager extends DataManager {
     private static final int COL_MARTIAL_STATUS = 3;
     private static final int COL_PASSWORD = 4;
 
-    // Private method to fetch sensitive user data. 
+    // Private method to fetch sensitive user data
     private static User _fetch(String userID) {
+        List<String[]> users = null;
         try {
-            List<String[]> users = readCSV(USERS_CSV_PATH);
-            for (String[] user : users) {
-                if (user[COL_USER_ID].equals(userID)) { // If find user using userID
-                    Boolean married = false;
-                    if (values[COL_MARTIAL_STATUS].trim().equalsIgnoreCase("Married")) married = true;
-                    // Create and return a User object
-                    return new User(
-                        values[COL_NAME].trim(), // Name
-                        values[COL_USER_ID].trim(), // userID
-                        Integer.parseInt(values[COL_AGE].trim()), // Age
-                        married // Marital Status    
-                    );
-                }
-            }
+            users = readCSV(USERS_CSV_PATH);
         } catch (IOException e) {
-            System.err.println("Error reading file: " + filePath);
+            System.err.println("Error reading file: " + USERS_CSV_PATH);
             e.printStackTrace();
         }
 
-        System.out.println("User not found in users.csv.");
-        return null;
+        for (String[] user : users) {
+            if (user[COL_USER_ID].equals(userID)) { // Find user using userID   
+                String name = user[COL_NAME];
+                int age = Integer.parseInt(user[COL_AGE]);
+                boolean married = Boolean.parseBoolean(user[COL_MARTIAL_STATUS]);                    
+                return new User(name, userID, age, married); // Return User object
+            } else {
+                System.out.println("User not found.");
+            }
+        }
+        return null; // Return null if user not found
     }
 
-    // Public method to allow other classes to call search()
-    public static User getFetch(String userID){
-        return UserManager.fetch(userID);
+    // Public method to fetch User object
+    public static User fetch(String userID){
+        return UserManager._fetch(userID);
     }
 
     // Private method to write password to file

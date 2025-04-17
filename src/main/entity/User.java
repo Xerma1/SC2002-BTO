@@ -9,7 +9,7 @@ public class User {
     private String userID;
     private int age;
     private boolean married;
-    private String password;
+    private String password = "password";
 
     //constructor
     public User(String name, String userID, int age, boolean married) {
@@ -17,7 +17,6 @@ public class User {
         this.userID = userID;
         this.age = age;
         this.married = married;
-        this.password = "password";
     }
 
     public void changePassword(Scanner scanner) {

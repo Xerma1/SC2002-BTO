@@ -85,11 +85,10 @@ public class BtoApp {
         
         // Get the username associated with the userID to be passed into userUI.printUI()
         User userdata = UserManager.fetch(userID);
-        String username = userdata.getName();
         
         // Run menu based on the usergroup using dependency injection
         IusergroupUI userUI = UserGroupUIFactory.getUI(usergroup);
-        userUI.runMenu(scanner, username, userID);
+        userUI.runMenu(scanner, userdata);
 
         scanner.close();
         }

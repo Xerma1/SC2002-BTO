@@ -25,6 +25,12 @@ public class User {
     public void changePassword(Scanner scanner) {
         System.out.print("Enter new password: ");
         String newPassword = scanner.nextLine();
+        System.out.print("Confirm new password: ");
+        String confirmPassword = scanner.nextLine();
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("Passwords do not match. Please try again.");
+            return;
+        }
         if (newPassword == password) {
             System.out.println("New password cannot be the same as the old password.");
             return;

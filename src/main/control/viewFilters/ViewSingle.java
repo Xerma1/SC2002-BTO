@@ -5,7 +5,7 @@ import main.control.dataManagers.ProjectManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewSingle implements IviewFilter {
+public class ViewSingle implements IViewFilter {
 
     public void view() {
         List<String[]> rows = ProjectManager.getFetchAll();

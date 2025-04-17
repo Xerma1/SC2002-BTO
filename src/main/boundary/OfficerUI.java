@@ -38,16 +38,11 @@ public class OfficerUI implements IusergroupUI {
                 """;
 
     @Override
-    public void runMenu(Scanner scanner, String username, String userID) {
+    public void runMenu(Scanner scanner, User user) {
 
         // Create instance of manager class
-            User userdata = UserManager.fetch(userID);
-            String name = userdata.getName();
-            String ID = userdata.getUserID();
-            int age = userdata.getAge();
-            boolean married = userdata.getMarried();
-        
-            Officer officer = new Officer(name, ID, age, married);
+        Officer officer = (Officer) UserManager.createUser(user);
+        String username = officer.getName();
        
         // Switch statement to process each option
         int choice;
@@ -67,7 +62,7 @@ public class OfficerUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
+                    IViewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
                     System.out.println("Showing all active projects: ");
                     System.out.println();
                     viewInterface.view();

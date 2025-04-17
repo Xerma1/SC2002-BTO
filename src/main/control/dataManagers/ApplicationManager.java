@@ -1,6 +1,6 @@
 package main.control.dataManagers;
 
-import main.control.viewFilters.IviewFilter;
+import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.control.TimeManager;
 import main.entity.Application.ApplicationStatus;
@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class ApplicationManager {
     private static final String APPL_CSV_PATH = "data/processed/bto_applications.csv";
-    private static final String OFF_RSG_PATH = "data/processed/officer_registration.csv";
+    private static final String OFF_RSG_PATH = "data/processed/officer_registrations.csv";
     private static final String PROJ_PATH = "data/processed/bto_projects.csv";
 
     private static List<String[]> fetchAll() {
@@ -52,7 +52,7 @@ public class ApplicationManager {
         }
 
         // Gets valid projects based on filter
-        IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
+        IViewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
         List<String[]> validProjects = viewInterface.getFilter();
 
         // Asking for project

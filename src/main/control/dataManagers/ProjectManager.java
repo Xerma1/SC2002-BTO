@@ -44,7 +44,7 @@ public class ProjectManager extends DataManager {
     }
     
     public static String askRoomType(Applicant applicant, Scanner scanner) {
-        if (!applicant.isMarried()) {
+        if (!applicant.getMarried()) {
             System.out.println("Applying for 2-room..."); // Singles default
             return "2-room";
         }

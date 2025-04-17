@@ -7,13 +7,13 @@ public class Applicant extends User {
     private static final String FILTER_SINGLE = "single";
 
     //constructor
-    public Applicant(String name, String userID, int age, boolean married) {
-        super(name, userID, age, married);
+    public Applicant(String name, String userID, int age, boolean married, String password, String accessLevel) {
+        super(name, userID, age, married, password, accessLevel);
         this.filterType = married ? FILTER_ALL : FILTER_SINGLE;
-        
     }
 
-    public boolean isMarried(){
-        return super.getMarried();
+    public String getFilterType() {
+        return filterType;
     }
+
 }

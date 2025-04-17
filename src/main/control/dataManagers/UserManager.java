@@ -13,6 +13,7 @@ public class UserManager extends DataManager {
     private static final int COL_AGE = 2;
     private static final int COL_MARTIAL_STATUS = 3;
     private static final int COL_PASSWORD = 4;
+    private static final int COL_ACCESS_LEVEL = 5; // Access level column index
 
     // Private method to fetch sensitive user data
     private static User _fetch(String userID) {
@@ -29,10 +30,9 @@ public class UserManager extends DataManager {
                 String name = user[COL_NAME];
                 int age = Integer.parseInt(user[COL_AGE]);
                 boolean married = Boolean.parseBoolean(user[COL_MARTIAL_STATUS]); 
-                String password = user[COL_PASSWORD];                   
-                return new User(name, userID, age, married, password); // Return User object
-            } else {
-                System.out.println("User not found.");
+                String password = user[COL_PASSWORD]; 
+                String accessLevel = user[COL_ACCESS_LEVEL];              
+                return new User(name, userID, age, married, password, accessLevel); // Return User object
             }
         }
         return null; // Return null if user not found

@@ -16,7 +16,7 @@ public class UserManager extends DataManager {
     private static final int COL_AGE = 2;
     private static final int COL_MARTIAL_STATUS = 3;
     private static final int COL_PASSWORD = 4;
-    private static final int COL_ACCESS_LEVEL = 5; // Access level column index
+    private static final int COL_ACCESS_LEVEL = 5;
 
     // Private method to fetch sensitive user data
     private static User _fetch(String userID) {

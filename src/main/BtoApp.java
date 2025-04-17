@@ -1,9 +1,9 @@
 package main;
 
-import main.control.InvalidLoginException;
-import main.control.LoginManager;
 import main.control.UserGroupUIFactory;
 import main.control.dataManagers.UserManager;
+import main.control.login.InvalidLoginException;
+import main.control.login.LoginManager;
 import main.entity.User;
 import main.boundary.*;
 

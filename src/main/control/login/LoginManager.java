@@ -1,4 +1,4 @@
-package main.control;
+package main.control.login;
 
 import main.control.dataManagers.UserManager;
 import main.entity.User;

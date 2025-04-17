@@ -5,7 +5,6 @@ import main.control.dataManagers.ApplicationManager;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
-import main.entity.Application;
 import main.entity.User;
 
 import java.util.Scanner;
@@ -69,6 +68,11 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                     
+                }
+                case 4 -> {
+                    ApplicationManager.viewApplication(applicant);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 
                 case 10 -> System.out.println("Exiting....");

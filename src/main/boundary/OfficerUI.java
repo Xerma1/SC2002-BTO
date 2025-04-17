@@ -3,7 +3,6 @@ package main.boundary;
 import main.control.dataManagers.ApplicationManager;
 import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
-import main.entity.Application;
 import main.entity.Officer;
 import main.entity.User;
 
@@ -65,7 +64,6 @@ public class OfficerUI implements IusergroupUI {
                 case 1 -> {
                     officer.changePassword();
                 }
-
                 case 2 -> {
                     IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
                     System.out.println("Showing all active projects: ");
@@ -74,13 +72,17 @@ public class OfficerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-
                 case 9 -> {
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {
                         System.out.println("Failed to apply.");
                     }
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 10 -> {
+                    ApplicationManager.viewApplication(officer);
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }

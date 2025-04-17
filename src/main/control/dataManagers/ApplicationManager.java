@@ -3,13 +3,9 @@ package main.control.dataManagers;
 import main.control.viewFilters.IviewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.control.TimeManager;
-import main.control.dataManagers.DataManager;
-import main.control.dataManagers.ProjectManager;
-import main.entity.User;
 import main.entity.Application.ApplicationStatus;
 import main.entity.Applicant;
-import main.entity.Officer;
-import main.entity.Application;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -64,6 +60,9 @@ public class ApplicationManager {
         try {
             applications = DataManager.readCSV(filePath);
             for (String[] values : applications) {
+                if (values.length <= 1) { // To guard against empty lines
+                    continue;
+                }
                 if (values[1].trim().equals(applicant.getUserID())) {
                     System.out.println("You have already applied for this project.");
                     return false;
@@ -82,11 +81,39 @@ public class ApplicationManager {
             applicant.getMarried() ? "Married" : "Single",
             projName,
             roomType,
+            validProject[roomIndex+1], // Price
+            validProject[8], // Opening date
+            validProject[9], // Closing date
             ApplicationStatus.PENDING.name()
         };
         DataManager.appendToCSV(APPL_CSV_PATH, newApplication);
         
         return true;
     }
+
+    public static void viewApplication(Applicant applicant) {
+        String filePath = APPL_CSV_PATH; // Path to the CSV file
+
+        List<String[]> applications;
+        try {
+            applications = DataManager.readCSV(filePath);
+            for (String[] values : applications) {
+                if (values[1].trim().equals(applicant.getUserID())) {
+                    // TODO: Fix formatting
+                    System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
+                    "Project Name", "Room Type", "Price", "Opening date", "Closing date", "Status");
+                    // NOTE: if user types in project name it is directly put in the application not Title Case
+                    System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
+                        values[4], values[5], values[6], values[7], values[8], values[9]); 
+                    return;
+                }
+            }
+            System.out.println("No applications found for this user.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading applications: " + e.getMessage());
+        }
+    }
 }
+
+
 

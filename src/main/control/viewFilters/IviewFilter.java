@@ -2,7 +2,7 @@ package main.control.viewFilters;
 
 import java.util.List;
 
-public interface IviewFilter {
+public interface IViewFilter {
 
     public void view();
     public default List<String[]> getFilter() {

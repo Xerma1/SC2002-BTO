@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import main.entity.User;
+import main.entity.Applicant;
+import main.entity.Officer;
+import main.entity.Manager;
 
 public class UserManager extends DataManager {
     // Constants for file paths and column indices
@@ -13,80 +16,87 @@ public class UserManager extends DataManager {
     private static final int COL_AGE = 2;
     private static final int COL_MARTIAL_STATUS = 3;
     private static final int COL_PASSWORD = 4;
+    private static final int COL_ACCESS_LEVEL = 5;
 
-    // Private method to fetch sensitive user data. 
-    private static User fetch(String userID) {
-        String filePath = USERS_CSV_PATH; // Path to the CSV file
-
+    // Private method to fetch sensitive user data
+    private static User _fetch(String userID) {
+        List<String[]> users = null;
         try {
-            List<String[]> rows = readCSV(filePath); // Use utility method
-            for (String[] values : rows) {
-                String storedUserID = values[COL_USER_ID].trim(); // Second column: userID
-                if (storedUserID.equals(userID)) {
-                    Boolean married = false;
-                    if (values[COL_MARTIAL_STATUS].trim().equalsIgnoreCase("Married")) married = true;
-                    // Create and return a User object
-                    return new User(
-                        values[COL_NAME].trim(), // Name
-                        values[COL_USER_ID].trim(), // userID
-                        Integer.parseInt(values[COL_AGE].trim()), // Age
-                        married // Marital Status    
-                    );
-                }
-            }
+            users = readCSV(USERS_CSV_PATH);
         } catch (IOException e) {
-            System.err.println("Error reading file: " + filePath);
+            System.err.println("Error reading file: " + USERS_CSV_PATH);
             e.printStackTrace();
         }
 
-        System.out.println("User not found in users.csv.");
-        return null;
-    }
-
-    // Public method to allow other classes to call search()
-    public static User getFetch(String userID){
-        return UserManager.fetch(userID);
-    }
-
-    // Private method to change password
-    private static void changePassword(String userID, String newPassword) {
-        String filePath = USERS_CSV_PATH; // Path to the CSV file
-        List<String[]> rows;
-
-        try {
-            rows = readCSV(filePath); // Use utility method
-            for (String[] values : rows) {
-                if (values[COL_USER_ID].trim().equals(userID)) { // Match userID
-                    if (values[COL_PASSWORD].trim().equals(newPassword)) { // Check if new password is the same as old password
-                        System.out.println("New password cannot be the same as the old password.");
-                        return;
-                    } else {
-                        values[COL_PASSWORD] = newPassword; // Update the password
-                        
-                    }
-                }
+        for (String[] user : users) {
+            if (user[COL_USER_ID].equals(userID)) { // Find user using userID   
+                String name = user[COL_NAME];
+                int age = Integer.parseInt(user[COL_AGE]);
+                boolean married = user[COL_MARTIAL_STATUS].equalsIgnoreCase("married"); // Convert marital status to boolean
+                String password = user[COL_PASSWORD]; 
+                String accessLevel = user[COL_ACCESS_LEVEL];              
+                return new User(name, userID, age, married, password, accessLevel); // Return User object
             }
+        }
+        return null; // Return null if user not found
+    }
+
+    // Public method to fetch User object
+    public static User fetch(String userID){
+        return UserManager._fetch(userID);
+    }
+
+    // Private method to write password to file
+    private static void _writePassword(String userID, String newPassword) {
+        List<String[]> users;
+        try {
+            users = readCSV(USERS_CSV_PATH); // Use utility method
         } catch (IOException e) {
-            System.err.println("Error reading file: " + filePath);
+            System.err.println("Error reading file: " + USERS_CSV_PATH);
             e.printStackTrace();
             return;
         }
 
-        // Write updated rows back to the file
-        try {
-            writeCSV(filePath, rows);
-        } catch (IOException e) {
-            System.err.println("Error writing to file: " + filePath);
-            e.printStackTrace();
+        for (String[] user : users) {
+            if (user[COL_USER_ID].trim().equals(userID)) { // Match userID
+                    user[COL_PASSWORD] = newPassword; // Update the password
+                }
         }
 
-        System.out.println("Password updated successfully!");
-        
+        // Write updated rows back to the file
+        // TODO: update single line instead of rewriting the whole file
+        try {
+            writeCSV(USERS_CSV_PATH, users);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + USERS_CSV_PATH);
+            e.printStackTrace();
+        }
     }
 
-    // Public method that calls changePassword
-    public static void getChangePassword(String userID, String newPassword){
-        UserManager.changePassword(userID, newPassword);
+    // Public method to create a new user based on access level
+    public static User createUser(User user) {
+        String name = user.getName();
+        String userID = user.getUserID();
+        int age = user.getAge();
+        boolean married = user.getMarried();
+        String password = user.getPassword();
+        String accessLevel = user.getAccessLevel();
+        switch (accessLevel) {
+            case "applicant":
+                return new Applicant(name, userID, age, married, password, accessLevel);
+            case "officer":
+                return new Officer(name, userID, age, married, password, accessLevel);
+            case "manager":
+                return new Manager(name, userID, age, married, password, accessLevel);
+            default:
+                System.out.println("Invalid access level. User not created.");
+                return null;
+        }
+    }
+
+    // Public method that calls writePassword
+    public static void writePassword(String userID, String newPassword) {
+        UserManager._writePassword(userID, newPassword);
     }
 }
 

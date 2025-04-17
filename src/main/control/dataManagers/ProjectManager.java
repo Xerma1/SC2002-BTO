@@ -33,6 +33,10 @@ public class ProjectManager extends DataManager {
 
         return rows;
     }
+    
+    public static List<String[]> getFetchAll(){
+        return ProjectManager.fetchAll();
+    }
 
     public static String askProjName(Scanner scanner) {
         System.out.print("Which project would you like to apply for?: ");
@@ -40,7 +44,7 @@ public class ProjectManager extends DataManager {
     }
     
     public static String askRoomType(Applicant applicant, Scanner scanner) {
-        if (!applicant.isMarried()) {
+        if (!applicant.getMarried()) {
             System.out.println("Applying for 2-room..."); // Singles default
             return "2-room";
         }
@@ -59,8 +63,5 @@ public class ProjectManager extends DataManager {
         }
     }
 
-    public static List<String[]> getFetchAll(){
-        return ProjectManager.fetchAll();
-    }
 
 }

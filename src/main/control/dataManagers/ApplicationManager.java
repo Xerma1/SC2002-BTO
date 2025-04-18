@@ -79,7 +79,6 @@ public class ApplicationManager {
         if (applicant instanceof Officer) {
             String[] registeredOfficers = validProject.getOfficers();
             boolean isApplicantOfficer = false;
-            System.out.println(Arrays.toString(registeredOfficers));
 
             if (registeredOfficers != null) {
                 isApplicantOfficer = Arrays.stream(registeredOfficers)

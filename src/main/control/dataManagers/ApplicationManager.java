@@ -81,6 +81,13 @@ public class ApplicationManager {
             boolean isApplicantOfficer = false;
 
             if (registeredOfficers != null) {
+                for (String officer : registeredOfficers) {
+                    System.out.println(officer);
+                }
+            }
+
+/*
+
                 isApplicantOfficer = Arrays.stream(registeredOfficers)
                     .map(String::trim) // Trim whitespace from each officer's name
                     .anyMatch(officer -> officer.equalsIgnoreCase(applicant.getName())); // Case-insensitive comparison
@@ -89,6 +96,7 @@ public class ApplicationManager {
                 System.out.println("You cannot apply for project " +  projName + " as you are already registered as an officer for this project.");
                 return false;
             }
+*/
         }
 
         // Asking for room type
@@ -113,7 +121,7 @@ public class ApplicationManager {
                 roomDetails[2], // Price
                 validProject.getOpenDate(), // Opening date
                 validProject.getCloseDate(), // Closing date
-                ApplicationStatus.PENDING.name(),
+                ApplicationStatus.SUCCESSFUL.name(),
                 validProject.getManager() // Manager
         };
         DataManager.appendToCSV(APPL_CSV_PATH, newApplication);

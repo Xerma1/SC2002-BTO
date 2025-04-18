@@ -18,7 +18,7 @@ public class ApplicantUI implements IusergroupUI {
                 2.  View list of BTO projects
                 3.  Apply for BTO project
                 4.  View details of applied BTO project and application status
-                5.  Book flat
+                5.  Request booking of flat
                 6.  View receipt of booked flat
                 7.  Request withdrawl from BTO application/booking
                 8.  Submit enquiry

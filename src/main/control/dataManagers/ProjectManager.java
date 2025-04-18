@@ -56,10 +56,9 @@ public class ProjectManager extends DataManager {
                 String closeDate = row[COL_CLOSE_DATE];
                 String manager = row[COL_MANAGER];
                 int officerSlots = Integer.parseInt(row[COL_OFFICER_SLOTS]);
-                String[] officers = row[COL_OFFICERS].split(",");
+                String[] officers = row[COL_OFFICERS].replace("\"", "").split(","); // Removing quotation marks and splitting by commas
                 officers = Arrays.stream(officers)
                     .map(String::trim) // Trim whitespace
-                    .map(name -> name.replace("\"", "")) // Remove quotation marks
                     .toArray(String[]::new);
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
 

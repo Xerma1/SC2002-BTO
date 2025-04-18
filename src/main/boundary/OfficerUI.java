@@ -70,6 +70,14 @@ public class OfficerUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 9 -> {
+                    String name = ApplicationManager.hasUserApplied(officer.getUserID()); 
+                    if(name != null){
+                        System.out.println("You have already applied for project " + name + ".");
+                        System.out.println("Press 'enter' to continue...");
+                        scanner.nextLine();
+                        break;
+                    }
+
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {

@@ -1,10 +1,12 @@
 package main.control.dataManagers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
+import main.entity.Project;
 
 public class ProjectManager extends DataManager {
     // Constants for file paths and column indices
@@ -19,22 +21,50 @@ public class ProjectManager extends DataManager {
     private static final int COL_3_ROOM_PRICE = 7;
     private static final int COL_OPEN_DATE= 8;
     private static final int COL_CLOSE_DATE = 9;
+    private static final int COL_MANAGER = 10;
+    private static final int COL_VISIBILITY = 11;
 
     // Private method to fetch sensitive project data. 
-    private static List<String[]> fetchAll() {
+    private static List<Project> fetchAll() {
         List<String[]> rows = null;
         try {
             rows = DataManager.readCSV(PROJ_CSV_PATH); // Use utility method
-            
         } catch (IOException e) {
             System.err.println("Error reading file: " + PROJ_CSV_PATH);
             e.printStackTrace();
         }
 
-        return rows;
+        if (rows == null || rows.isEmpty()) {
+            return null; // Return null if rows couldn't be read or are empty
+        }
+
+        // Skip the header row and map rows to Project objects
+        List<Project> projects = new ArrayList<>();
+        for (int i = 1; i < rows.size(); i++) { // Start from index 1 to skip the header
+            String[] row = rows.get(i);
+            try {
+                String projectName = row[COL_NAME];
+                String neighbourhood = row[COL_NEIGHBORHOOD];
+                List<String[]> flatTypes = List.of(
+                    new String[] { row[COL_2_ROOM], row[COL_2_ROOM_NO], row[COL_2_ROOM_PRICE] },
+                    new String[] { row[COL_3_ROOM], row[COL_3_ROOM_NO], row[COL_3_ROOM_PRICE] }
+                );
+                String openDate = row[COL_OPEN_DATE];
+                String closeDate = row[COL_CLOSE_DATE];
+                String manager = row[COL_MANAGER];
+                boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
+
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, visibility));
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println("Error processing row: " + String.join(",", row));
+                e.printStackTrace();
+            }
+        }
+
+        return projects;
     }
     
-    public static List<String[]> getFetchAll(){
+    public static List<Project> getFetchAll(){
         return ProjectManager.fetchAll();
     }
 

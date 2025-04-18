@@ -27,6 +27,7 @@ public class ProjectManager extends DataManager {
     private static final int COL_OFFICER_SLOTS = 11;
     private static final int COL_OFFICERS = 12;
     private static final int COL_VISIBILITY = 13;
+    private static final int COL_ENQUIRIES = 14;
 
     // Private method to fetch sensitive project data. 
     private static List<Project> fetchAll() {
@@ -62,8 +63,9 @@ public class ProjectManager extends DataManager {
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new);
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
+                String[] enquiries = row[COL_ENQUIRIES].replace("\"", "").split("/"); // Removing quotation marks and splitting by /
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiries));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();

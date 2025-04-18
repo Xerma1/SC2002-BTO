@@ -12,6 +12,7 @@ public class Project {
     private int officerSlots;
     private String[] officers;
     private boolean visibility; // True if project is open for application, false otherwise 
+    private List<Enquiry[]> enquiries;
 
     // Constructor
     public Project(String projectName, String neighbourhood, List<String[]> flatTypes, 

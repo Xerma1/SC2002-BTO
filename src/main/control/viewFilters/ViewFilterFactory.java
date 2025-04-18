@@ -1,7 +1,7 @@
 package main.control.viewFilters;
 
 public class ViewFilterFactory {
-    public static IviewFilter getViewFilter(String filterType) {
+    public static IViewFilter getViewFilter(String filterType) {
         return switch (filterType) {
             case "single" -> new ViewSingle();
             case "all" -> new ViewAll();

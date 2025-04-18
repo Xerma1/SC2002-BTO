@@ -2,11 +2,11 @@ package main.boundary;
 
 import main.control.dataManagers.UserManager;
 import main.control.dataManagers.ApplicationManager;
-import main.control.viewFilters.IviewFilter;
+import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
-import main.entity.Application;
 import main.entity.User;
+import main.entity.Project;
 
 import java.util.Scanner;
 
@@ -27,17 +27,12 @@ public class ApplicantUI implements IusergroupUI {
 
                 """;
     @Override
-    public void runMenu(Scanner scanner, String username, String userID) {
+    public void runMenu(Scanner scanner, User user) {
 
         // Create instance of applicant class
-            User userdata = UserManager.getFetch(userID);
-            String name = userdata.getName();
-            String ID = userdata.getUserID();
-            int age = userdata.getAge();
-            boolean married = userdata.getMarried();
+        Applicant applicant = (Applicant) UserManager.createUser(user);
+        String username = applicant.getName();
 
-            Applicant applicant = new Applicant(name, ID, age, married);
-       
         // Switch statement to process each option
         int choice;
         do{
@@ -50,17 +45,19 @@ public class ApplicantUI implements IusergroupUI {
 
             switch (choice) {
                 case 1 -> {
-                    applicant.changePassword();
+                    applicant.changePassword(scanner);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
+                    IViewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
                     System.out.println("Showing all active projects available to you: ");
                     System.out.println();
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 3 -> {
+                case 3 -> {                   
                     if (ApplicationManager.applyBTO(applicant, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {
@@ -69,6 +66,12 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                     
+                }
+                case 4 -> {
+                    System.out.println("Viewing application details: ");
+                    ApplicationManager.viewApplication(applicant);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
                 
                 case 10 -> System.out.println("Exiting....");

@@ -33,6 +33,10 @@ public class ManagerUI implements IusergroupUI {
         User userdata = UserManager.getFetch(userID);
         Manager manager = new Manager(userdata.getName(), userdata.getUserID(), userdata.getAge(), userdata.getMarried());
 
+
+        // Create instance of manager class
+
+        // Switch statement to process each option
         int choice;
         do {
             System.out.println("<< Logged in as manager: " + username + " >>");
@@ -64,12 +68,15 @@ public class ManagerUI implements IusergroupUI {
 
                 case 7 -> System.out.println("Exiting Manager menu...");
                 
+                case 12 -> System.out.println("Exiting....");
                 default -> System.out.println("Invalid choice. Try again.");
             }
-
-        } while (choice != 7);
+        }while (choice != 12);
+        
     }
+
 }
+
 
 
 

@@ -3,7 +3,6 @@ package main.boundary;
 import main.control.dataManagers.ApplicationManager;
 import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
-import main.entity.Application;
 import main.entity.Officer;
 import main.entity.User;
 
@@ -39,16 +38,11 @@ public class OfficerUI implements IusergroupUI {
                 """;
 
     @Override
-    public void runMenu(Scanner scanner, String username, String userID) {
+    public void runMenu(Scanner scanner, User user) {
 
-        // Create instance of manager class
-            User userdata = UserManager.getFetch(userID);
-            String name = userdata.getName();
-            String ID = userdata.getUserID();
-            int age = userdata.getAge();
-            boolean married = userdata.getMarried();
-        
-            Officer officer = new Officer(name, ID, age, married);
+        // Create instance of officer class
+        Officer officer = (Officer) UserManager.createUser(user);
+        String username = officer.getName();
        
         // Switch statement to process each option
         int choice;
@@ -63,24 +57,29 @@ public class OfficerUI implements IusergroupUI {
 
             switch (choice){
                 case 1 -> {
-                    officer.changePassword();
+                    officer.changePassword(scanner);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
                 }
-
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
+                    IViewFilter viewInterface = ViewFilterFactory.getViewFilter(officer.filterType);
                     System.out.println("Showing all active projects: ");
                     System.out.println();
                     viewInterface.view();
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-
                 case 9 -> {
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {
                         System.out.println("Failed to apply.");
                     }
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 10 -> {
+                    ApplicationManager.viewApplication(officer);
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }

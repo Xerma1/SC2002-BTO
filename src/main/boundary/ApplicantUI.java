@@ -35,7 +35,7 @@ public class ApplicantUI implements IusergroupUI {
 
         // Switch statement to process each option
         int choice;
-        do{
+        do {
             // Print UI
             System.out.println("<< Logged in as applicant: " + username + " >>");
             System.out.println(applicantMenu);
@@ -77,7 +77,7 @@ public class ApplicantUI implements IusergroupUI {
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
-        }while (choice != 10);
+        } while (choice != 10);
         
     }
 

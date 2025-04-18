@@ -9,18 +9,17 @@ import main.entity.Officer;
 import main.entity.Project;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class ApplicationManager {
+public class ApplicationManager extends DataManager {
     private static final String APPL_CSV_PATH = "data/processed/bto_applications.csv";
     private static final String OFF_RSG_PATH = "data/processed/officer_registrations.csv";
 
     private static List<String[]> fetchAllApplications() {
         List<String[]> rows = null;
         try {
-            rows = DataManager.readCSV(APPL_CSV_PATH); // Use utility method
+            rows = readCSV(APPL_CSV_PATH); // Use utility method
         } catch (IOException e) {
             System.err.println("Error reading file: " + APPL_CSV_PATH);
             e.printStackTrace();
@@ -77,15 +76,9 @@ public class ApplicationManager {
         
         // Finally, check if applicant is not also registered as an officer for the same project
         if (applicant instanceof Officer) {
-            String[] registeredOfficers = validProject.getOfficers();
-            boolean isApplicantOfficer = false;
+            boolean isRegistered = ProjectManager.isRegistered((Officer) applicant, validProject);
 
-            if (registeredOfficers != null) {
-                isApplicantOfficer = Arrays.stream(registeredOfficers)
-                    .map(String::trim) // Trim whitespace from each officer's name
-                    .anyMatch(officer -> officer.equalsIgnoreCase(applicant.getName())); // Case-insensitive comparison
-            }
-            if (isApplicantOfficer) {
+            if (isRegistered) {
                 System.out.println("You cannot apply for project " +  projName + " as you are already registered as an officer for this project.");
                 return false;
             }
@@ -113,10 +106,10 @@ public class ApplicationManager {
                 roomDetails[2], // Price
                 validProject.getOpenDate(), // Opening date
                 validProject.getCloseDate(), // Closing date
-                ApplicationStatus.SUCCESSFUL.name(),
+                ApplicationStatus.PENDING.name(),
                 validProject.getManager() // Manager
         };
-        DataManager.appendToCSV(APPL_CSV_PATH, newApplication);
+        appendToCSV(APPL_CSV_PATH, newApplication);
 
         return true;
     }
@@ -125,9 +118,9 @@ public class ApplicationManager {
     public static void viewApplication(Applicant applicant) {
         List<String[]> applications;
         try {
-            applications = DataManager.readCSV(APPL_CSV_PATH);
+            applications = readCSV(APPL_CSV_PATH);
             for (String[] values : applications) {
-                if (values[1].trim().equals(applicant.getUserID())) {
+                if (values[1].trim().equals(applicant.getUserID()) && values.length > 1) {
                     // Print application details
                     System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
                             "Project Name", "Room Type", "Price", "Opening Date", "Closing Date", "Status");

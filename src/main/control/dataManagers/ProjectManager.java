@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
+import main.entity.Officer;
 import main.entity.Project;
 
 public class ProjectManager extends DataManager {
@@ -72,9 +73,22 @@ public class ProjectManager extends DataManager {
         return projects;
     }
     
-    public static List<Project> getFetchAll(){
+    public static List<Project> getFetchAll() {
         return ProjectManager.fetchAll();
     }
+
+    public static boolean isRegistered(Officer officer, Project project) {
+        String[] registeredOfficers = project.getOfficers();
+        boolean isOfficerRegistered = false;
+
+        if (registeredOfficers != null) {
+            isOfficerRegistered = Arrays.stream(registeredOfficers)
+                .map(String::trim) // Trim whitespace from each officer's name
+                .anyMatch(officerName -> officerName.equalsIgnoreCase(officer.getName())); // Case-insensitive comparison
+        }
+        return isOfficerRegistered;
+    }
+
 
     public static String askProjName(Scanner scanner) {
         System.out.print("Which project would you like to apply for?: ");

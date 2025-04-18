@@ -22,10 +22,29 @@ public class DataManager {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                rows.add(line.split(",").clone()); // Defensive copy
+                rows.add(parseCSVLine(line)); // Use custom parser
             }
         }
         return Collections.unmodifiableList(rows); // Immutable outer list
+    }
+
+    private static String[] parseCSVLine(String line) {
+        List<String> fields = new ArrayList<>();
+        StringBuilder currentField = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (char c : line.toCharArray()) {
+            if (c == '"') {
+                inQuotes = !inQuotes; // Toggle inQuotes flag
+            } else if (c == ',' && !inQuotes) {
+                fields.add(currentField.toString().trim());
+                currentField.setLength(0); // Clear the StringBuilder
+            } else {
+                currentField.append(c);
+            }
+        }
+        fields.add(currentField.toString().trim()); // Add the last field
+        return fields.toArray(new String[0]);
     }
 
     // Utility method to write into CSV file

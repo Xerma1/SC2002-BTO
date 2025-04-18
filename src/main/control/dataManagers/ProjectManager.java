@@ -58,12 +58,14 @@ public class ProjectManager extends DataManager {
                 String closeDate = row[COL_CLOSE_DATE];
                 String manager = row[COL_MANAGER];
                 int officerSlots = Integer.parseInt(row[COL_OFFICER_SLOTS]);
-                String[] officers = row[COL_OFFICERS].replace("\"", "").split("/"); // Removing quotation marks and splitting by /
+                String[] officers = row[COL_OFFICERS]
+                    .replace("\"", "") // Remove surrounding quotation marks
+                    .split(","); // Split by commas
                 officers = Arrays.stream(officers)
                     .map(String::trim) // Trim whitespace
-                    .toArray(String[]::new);
+                    .toArray(String[]::new); // Convert back to an array
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
-                String[] enquiries = row[COL_ENQUIRIES].replace("\"", "").split("/"); // Removing quotation marks and splitting by /
+                // String[] enquiries = row[COL_ENQUIRIES];
 
                 projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiries));
             } catch (ArrayIndexOutOfBoundsException e) {

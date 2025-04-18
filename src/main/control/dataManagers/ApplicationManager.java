@@ -120,7 +120,7 @@ public class ApplicationManager extends DataManager {
         try {
             applications = readCSV(APPL_CSV_PATH);
             for (String[] values : applications) {
-                if (values[1].trim().equals(applicant.getUserID()) && values.length > 1) {
+                if (values.length > 1 && values[1].trim().equals(applicant.getUserID())) {
                     // Print application details
                     System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
                             "Project Name", "Room Type", "Price", "Opening Date", "Closing Date", "Status");

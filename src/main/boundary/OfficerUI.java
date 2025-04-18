@@ -40,7 +40,7 @@ public class OfficerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, User user) {
 
-        // Create instance of manager class
+        // Create instance of officer class
         Officer officer = (Officer) UserManager.createUser(user);
         String username = officer.getName();
        

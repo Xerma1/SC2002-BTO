@@ -16,9 +16,8 @@ import java.util.Scanner;
 public class ApplicationManager {
     private static final String APPL_CSV_PATH = "data/processed/bto_applications.csv";
     private static final String OFF_RSG_PATH = "data/processed/officer_registrations.csv";
-    private static final String PROJ_PATH = "data/processed/bto_projects.csv";
 
-    private static List<String[]> fetchAll() {
+    private static List<String[]> fetchAllApplications() {
         List<String[]> rows = null;
         try {
             rows = DataManager.readCSV(APPL_CSV_PATH); // Use utility method
@@ -29,126 +28,99 @@ public class ApplicationManager {
         return rows;
     }
 
-    public static List<String[]> getFetchAll() {
-        return ApplicationManager.fetchAll();
+    public static List<String[]> getFetchAllApplications() {
+        return ApplicationManager.fetchAllApplications();
     }
 
-
-
-    public static boolean applyBTO(Applicant applicant, Scanner scanner) { // Writes an application to bto_applications.csv
+    public static boolean applyBTO(Applicant applicant, Scanner scanner) {
         // Reading files
-        List<String[]> applications = ApplicationManager.getFetchAll();
-        List<String[]> projects = ProjectManager.getFetchAll();
-        if (projects == null) {
+        List<Project> projects = ProjectManager.getFetchAll();
+        if (projects == null || projects.isEmpty()) {
             System.out.println("No projects available.");
             return false;
         }
-        List<String[]> officerRsgs;
-        try {
-            officerRsgs = DataManager.readCSV(OFF_RSG_PATH);
-        } catch (IOException e) {
-            System.out.println("An error occurred while reading officer registrations: " + e.getMessage());
+
+        // Checks if user has already applied for a project. If so, skip the entire process and return false.
+        String projname = ApplicationManager.hasUserApplied(applicant.getUserID());
+        if(projname != null){
+            System.out.println("You have already applied for project " + projname + ".");
             return false;
         }
 
-        // Gets valid projects based on filter
+        // Cleared to proceed with application
+        // Get valid projects based on filter type
         IViewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
-        List<String[]> validProjects = viewInterface.getFilter();
+        List<Project> validProjects = viewInterface.getValidProjects();
 
-        // Asking for project
+        // Ask for project name
         String projName = ProjectManager.askProjName(scanner);
 
-        // Checking if project is valid
-        boolean foundValidProject = false;
-        String[] validProject = null;
-        for (String[] values : validProjects) {
-            if (projName.equalsIgnoreCase(values[0].trim())) { // Project name found
-                foundValidProject = true;
-                validProject = values;
-                projName = values[0].trim(); // Normalize project name to Title Case
+        // Check against validProjects to see if project is valid
+        Project validProject = null;
+        for (Project project : validProjects) {
+            if (projName.equalsIgnoreCase(project.getProjectName().trim())) { // Project name found
+                validProject = project;
+                projName = project.getProjectName().trim(); // Normalize project name to Title Case
                 break;
             }
         }
-        if (!foundValidProject) { // Project name not found
+        if (validProject == null) { // Project name not found
             System.out.println("Project is not available.");
             return false;
         }
 
-        // Asking for room type
-        String roomType = ProjectManager.askRoomType(applicant, scanner);
-        int roomIndex = roomType.equals("2-room") ? 3 : 6;
-    
-        // Check room availability
-        if ("0".equals(validProject[roomIndex].trim())) {
-            System.out.println("No vacancies.");
-            return false;
-        }
-
-        // Checking if application is active
-        if (!TimeManager.isValidDate(validProject[8].trim(), validProject[9].trim())) {
+        // Check if project is actively open to applications, if not, return false
+        if (!TimeManager.isValidDate(validProject.getOpenDate().trim(), validProject.getCloseDate().trim())) {
             System.out.println("Project not active.");
             return false;
         }
+        
+        // Finally, check if applicant is not also registered as an officer for the same project
+        if (applicant instanceof Officer) {
+            String[] registeredOfficers = validProject.getOfficers();
+            boolean isApplicantOfficer = false;
 
-        // Checking if user has already applied for project
-        for (String[] values : applications) {
-            if (values.length <= 1) { // To guard against empty lines
-                continue;
+            if (registeredOfficers != null) {
+                isApplicantOfficer = Arrays.stream(registeredOfficers)
+                    .map(String::trim) // Trim whitespace from each officer's name
+                    .anyMatch(officer -> officer.equalsIgnoreCase(applicant.getName())); // Case-insensitive comparison
             }
-            if (values[1].trim().equals(applicant.getUserID())) {
-                System.out.println("You have already applied for this project.");
+            if (isApplicantOfficer) {
+                System.out.println("You cannot apply for project " +  projName + " as you are already registered as an officer for this project.");
                 return false;
             }
         }
 
-        // Additional Officer logic
-        if (applicant instanceof Officer) {
-            for (String[] project : projects) {
-                if (project.length > 12) { // Ensure the project array has enough elements
-                    String projectName = project[0].trim();
-                    String[] registeredOfficers = project[12].split(",");
-            
-                    boolean isSameProject = projectName.equals(projName);
-                    boolean isApplicantOfficer = Arrays.stream(registeredOfficers)
-                                                    .map(String::trim)
-                                                    .anyMatch(officer -> officer.equals(applicant.getName()));
-            
-                    if (isApplicantOfficer) {
-                        if (isSameProject) {
-                            System.out.println("You are registered as an officer for this project.");
-                            return false;
-                        }
-                    }
+        // Asking for room type
+        String roomType = ProjectManager.askRoomType(applicant, scanner);
+        int roomIndex = roomType.equals("2-room") ? 0 : 1;
 
-                    if (isApplicantOfficer && TimeManager.isValidDate(project[8].trim(), project[9].trim())) {
-                        System.out.println("You are already registered as an officer for another active project.");
-                        return false;
-                    }
-                }
-            }
+        // Check room availability
+        String[] roomDetails = validProject.getFlatTypes().get(roomIndex);
+        if ("0".equals(roomDetails[1].trim())) {
+            System.out.println("No vacancies.");
+            return false;
         }
-            // Check if officer is registering to be an officer for a project
-            // TODO: ^
 
         // Writing application back to CSV file
         String[] newApplication = {
-            applicant.getName(),
-            applicant.getUserID(),
-            applicant.getAge() + "",
-            applicant.getMarried() ? "Married" : "Single",
-            projName,
-            roomType,
-            validProject[roomIndex+1], // Price
-            validProject[8], // Opening date
-            validProject[9], // Closing date
-            ApplicationStatus.PENDING.name(),
-            validProject[10], // Manager
-            validProject[12] // Officers
+                applicant.getName(),
+                applicant.getUserID(),
+                String.valueOf(applicant.getAge()),
+                applicant.getMarried() ? "Married" : "Single",
+                projName,
+                roomType,
+                roomDetails[2], // Price
+                validProject.getOpenDate(), // Opening date
+                validProject.getCloseDate(), // Closing date
+                ApplicationStatus.PENDING.name(),
+                validProject.getManager() // Manager
         };
         DataManager.appendToCSV(APPL_CSV_PATH, newApplication);
-        
+
         return true;
     }
+
 
     public static void viewApplication(Applicant applicant) {
         String filePath = APPL_CSV_PATH; // Path to the CSV file
@@ -158,11 +130,12 @@ public class ApplicationManager {
             applications = DataManager.readCSV(filePath);
             for (String[] values : applications) {
                 if (values[1].trim().equals(applicant.getUserID())) {
-                    // TODO: Fix formatting
+                    // Print application details
                     System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
-                    "Project Name", "Room Type", "Price", "Opening date", "Closing date", "Status");
+                            "Project Name", "Room Type", "Price", "Opening Date", "Closing Date", "Status");
+                    System.out.println("=".repeat(90));
                     System.out.printf("%-15s %-15s %-10s %-15s %-15s %-10s%n",
-                        values[4], values[5], values[6], values[7], values[8], values[9]); 
+                            values[4], values[5], values[6], values[7], values[8], values[9]);
                     return;
                 }
             }
@@ -170,6 +143,23 @@ public class ApplicationManager {
         } catch (IOException e) {
             System.out.println("An error occurred while reading applications: " + e.getMessage());
         }
+    }
+
+
+    public static String hasUserApplied(String userId) {
+        List<String[]> applications = getFetchAllApplications();
+
+        if (applications == null || applications.isEmpty()) {
+            return null; // No applications exist
+        }
+
+        for (String[] application : applications) {
+            if (application.length > 1 && application[1].trim().equals(userId)) {
+                return application[4].trim(); // Return the project name (column 4)
+            }
+        }
+
+        return null; // User has not applied for any project
     }
 }
 

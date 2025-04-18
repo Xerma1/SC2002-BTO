@@ -6,6 +6,7 @@ import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
 import main.entity.User;
+import main.entity.Project;
 
 import java.util.Scanner;
 
@@ -44,7 +45,6 @@ public class ApplicantUI implements IusergroupUI {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.print(applicant.getFilterType());
                     applicant.changePassword(scanner);
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
@@ -57,7 +57,7 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 3 -> {
+                case 3 -> {                   
                     if (ApplicationManager.applyBTO(applicant, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {
@@ -68,6 +68,7 @@ public class ApplicantUI implements IusergroupUI {
                     
                 }
                 case 4 -> {
+                    System.out.println("Viewing application details: ");
                     ApplicationManager.viewApplication(applicant);
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader; // Used to open and read the file
 import java.io.FileWriter;
 import java.io.IOException; // Handles exceptions that may occur during file operations
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,10 +40,25 @@ public class DataManager {
 
     // Utility method to append one line to CSV
     public static void appendToCSV(String filePath, String[] dataRow) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+        if (dataRow == null || dataRow.length == 0) {
+            System.out.println("Error: Cannot append an empty or null row to the CSV file.");
+            return;
+        }
+
+        try (RandomAccessFile raf = new RandomAccessFile(filePath, "rw")) {
+            // Move to the end of the file
+            long fileLength = raf.length();
+            if (fileLength > 0) {
+                raf.seek(fileLength - 1);
+                // Check if the last character is a newline
+                if (raf.readByte() != '\n') {
+                    raf.writeBytes("\n"); // Add a newline if it doesn't exist
+                }
+            }
+
+            // Append the new row
             String csvLine = String.join(",", dataRow);
-            writer.write(csvLine);
-            writer.newLine(); // Adds the actual newline
+            raf.writeBytes(csvLine + "\n");
         } catch (IOException e) {
             System.out.println("Error writing to CSV: " + e.getMessage());
         }

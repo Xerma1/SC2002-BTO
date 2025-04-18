@@ -103,5 +103,23 @@ public class ProjectManager extends DataManager {
         }
     }
 
+    private static Project ProjectByName(String projectName) {
+        List<Project> projects = getFetchAll(); // Fetch all projects
+        if (projects == null || projects.isEmpty()) {
+            System.out.println("No projects available.");
+            return null;
+        }
+    
+        for (Project project : projects) {
+            if (project.getProjectName().equalsIgnoreCase(projectName)) { // Case-insensitive comparison
+                return project;
+            }
+        }
 
+        return null; // Return null if no matching project is found
+    }
+
+    public static Project getProjectByName(String projectName){
+        return ProjectByName(projectName);
+    }
 }

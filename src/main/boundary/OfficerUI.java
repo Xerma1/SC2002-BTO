@@ -1,6 +1,7 @@
 package main.boundary;
 
 import main.control.dataManagers.ApplicationManager;
+import main.control.dataManagers.BookingManager;
 import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
 import main.entity.Officer;
@@ -80,6 +81,17 @@ public class OfficerUI implements IusergroupUI {
                 }
                 case 10 -> {
                     ApplicationManager.viewApplication(officer);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 11 -> {
+                    Boolean isSuccessful = BookingManager.initiateBooking(officer, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Booking unsuccessful.");
+                    }
+                    else {
+                        System.out.println("Booking successful!");
+                    }
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }

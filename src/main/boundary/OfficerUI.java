@@ -71,6 +71,16 @@ public class OfficerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
+                case 5 -> {
+                    officer.viewHandling();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 6 -> {
+                    EnquiryManager.viewEnquiries(officer.getHandling());
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
                 case 9 -> {
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");

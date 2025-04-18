@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
-import main.entity.Enquiry;
 import main.entity.Officer;
 import main.entity.Project;
 
@@ -28,7 +27,6 @@ public class ProjectManager extends DataManager {
     private static final int COL_OFFICER_SLOTS = 11;
     private static final int COL_OFFICERS = 12;
     private static final int COL_VISIBILITY = 13;
-    private static final int COL_ENQUIRIES = 14;
 
     // Private method to fetch sensitive project data. 
     private static List<Project> fetchAll() {

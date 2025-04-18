@@ -40,7 +40,7 @@ public class OfficerUI implements IusergroupUI {
     @Override
     public void runMenu(Scanner scanner, User user) {
 
-        // Create instance of manager class
+        // Create instance of officer class
         Officer officer = (Officer) UserManager.createUser(user);
         String username = officer.getName();
        
@@ -70,14 +70,6 @@ public class OfficerUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 9 -> {
-                    String name = ApplicationManager.hasUserApplied(officer.getUserID()); 
-                    if(name != null){
-                        System.out.println("You have already applied for project " + name + ".");
-                        System.out.println("Press 'enter' to continue...");
-                        scanner.nextLine();
-                        break;
-                    }
-
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {

@@ -2,6 +2,7 @@ package main.control.dataManagers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,9 @@ public class ProjectManager extends DataManager {
     private static final int COL_OPEN_DATE= 8;
     private static final int COL_CLOSE_DATE = 9;
     private static final int COL_MANAGER = 10;
-    private static final int COL_VISIBILITY = 11;
+    private static final int COL_OFFICER_SLOTS = 11;
+    private static final int COL_OFFICERS = 12;
+    private static final int COL_VISIBILITY = 13;
 
     // Private method to fetch sensitive project data. 
     private static List<Project> fetchAll() {
@@ -52,9 +55,15 @@ public class ProjectManager extends DataManager {
                 String openDate = row[COL_OPEN_DATE];
                 String closeDate = row[COL_CLOSE_DATE];
                 String manager = row[COL_MANAGER];
+                int officerSlots = Integer.parseInt(row[COL_OFFICER_SLOTS]);
+                String[] officers = row[COL_OFFICERS].split(",");
+                officers = Arrays.stream(officers)
+                    .map(String::trim) // Trim whitespace
+                    .map(name -> name.replace("\"", "")) // Remove quotation marks
+                    .toArray(String[]::new);
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, visibility));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();

@@ -57,14 +57,7 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 3 -> {
-                    String name = ApplicationManager.hasUserApplied(applicant.getUserID());
-                    if(name != null){
-                        System.out.println("You have already applied for project " + name + ".");
-                        System.out.println("Press 'enter' to continue...");
-                        scanner.nextLine();
-                        break;
-                    }
+                case 3 -> {                   
                     if (ApplicationManager.applyBTO(applicant, scanner)) {
                         System.out.println("Applied successfully!");
                     } else {

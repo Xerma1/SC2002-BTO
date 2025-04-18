@@ -34,21 +34,28 @@ public class ApplicationManager {
 
     public static boolean applyBTO(Applicant applicant, Scanner scanner) {
         // Reading files
-        List<String[]> applications = ApplicationManager.getFetchAllApplications();
         List<Project> projects = ProjectManager.getFetchAll();
         if (projects == null || projects.isEmpty()) {
             System.out.println("No projects available.");
             return false;
         }
 
-        // Gets valid projects based on filter
+        // Checks if user has already applied for a project. If so, skip the entire process and return false.
+        String projname = ApplicationManager.hasUserApplied(applicant.getUserID());
+        if(projname != null){
+            System.out.println("You have already applied for project " + projname + ".");
+            return false;
+        }
+
+        // Cleared to proceed with application
+        // Get valid projects based on filter type
         IViewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
         List<Project> validProjects = viewInterface.getValidProjects();
 
-        // Asking for project
+        // Ask for project name
         String projName = ProjectManager.askProjName(scanner);
 
-        // Checking if project is valid
+        // Check against validProjects to see if project is valid
         Project validProject = null;
         for (Project project : validProjects) {
             if (projName.equalsIgnoreCase(project.getProjectName().trim())) { // Project name found
@@ -62,6 +69,28 @@ public class ApplicationManager {
             return false;
         }
 
+        // Check if project is actively open to applications, if not, return false
+        if (!TimeManager.isValidDate(validProject.getOpenDate().trim(), validProject.getCloseDate().trim())) {
+            System.out.println("Project not active.");
+            return false;
+        }
+        
+        // Finally, check if applicant is not also registered as an officer for the same project
+        if (applicant instanceof Officer) {
+            String[] registeredOfficers = validProject.getOfficers();
+            boolean isApplicantOfficer = false;
+
+            if (registeredOfficers != null) {
+                isApplicantOfficer = Arrays.stream(registeredOfficers)
+                    .map(String::trim) // Trim whitespace from each officer's name
+                    .anyMatch(officer -> officer.equalsIgnoreCase(applicant.getName())); // Case-insensitive comparison
+            }
+            if (isApplicantOfficer) {
+                System.out.println("You cannot apply for project " +  projName + " as you are already registered as an officer for this project.");
+                return false;
+            }
+        }
+
         // Asking for room type
         String roomType = ProjectManager.askRoomType(applicant, scanner);
         int roomIndex = roomType.equals("2-room") ? 0 : 1;
@@ -71,38 +100,6 @@ public class ApplicationManager {
         if ("0".equals(roomDetails[1].trim())) {
             System.out.println("No vacancies.");
             return false;
-        }
-
-        // Checking if application is active
-        if (!TimeManager.isValidDate(validProject.getOpenDate().trim(), validProject.getCloseDate().trim())) {
-            System.out.println("Project not active.");
-            return false;
-        }
-
-        // Additional Officer logic
-        if (applicant instanceof Officer) {
-            for (Project project : projects) {
-                if (project.getManager() != null) {
-                    String[] registeredOfficers = project.getManager().split(",");
-
-                    boolean isSameProject = project.getProjectName().equals(projName);
-                    boolean isApplicantOfficer = Arrays.stream(registeredOfficers)
-                            .map(String::trim)
-                            .anyMatch(officer -> officer.equals(applicant.getName()));
-
-                    if (isApplicantOfficer) {
-                        if (isSameProject) {
-                            System.out.println("You are registered as an officer for this project.");
-                            return false;
-                        }
-                    }
-
-                    if (isApplicantOfficer && TimeManager.isValidDate(project.getOpenDate().trim(), project.getCloseDate().trim())) {
-                        System.out.println("You are already registered as an officer for another active project.");
-                        return false;
-                    }
-                }
-            }
         }
 
         // Writing application back to CSV file

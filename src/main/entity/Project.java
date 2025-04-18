@@ -9,17 +9,21 @@ public class Project {
     private String openDate;
     private String closeDate;
     private String manager;
+    private int officerSlots;
+    private String[] officers;
     private boolean visibility; // True if project is open for application, false otherwise 
 
     // Constructor
     public Project(String projectName, String neighbourhood, List<String[]> flatTypes, 
-                   String openDate, String closeDate, String manager, boolean visibility) {
+                   String openDate, String closeDate, String manager, int officerSlots, String[] officers, boolean visibility) {
         this.projectName = projectName;
         this.neighbourhood = neighbourhood;
         this.flatTypes = flatTypes;
         this.openDate = openDate;
         this.closeDate = closeDate;
         this.manager = manager;
+        this.officerSlots = officerSlots;
+        this.officers = officers;
         this.visibility = visibility;
     }
 
@@ -46,6 +50,14 @@ public class Project {
 
     public String getManager() {
         return manager;
+    }
+
+    public int getOfficerSlots() {
+        return officerSlots;
+    }
+
+    public String[] getOfficers() {
+        return officers;
     }
 
     public boolean isVisibility() {

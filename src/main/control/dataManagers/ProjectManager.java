@@ -66,13 +66,8 @@ public class ProjectManager extends DataManager {
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new); // Convert back to an array
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
-                String[] enquiriesString = row[COL_ENQUIRIES]
-                    .replace("\"", "") // Remove surrounding quotation marks
-                    .split(","); // Split by commas
-                List<Enquiry> enquiriesObjects;
-                enquiriesObjects = EnquiryManager.makeEnquiries(enquiriesString);
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiriesObjects));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();

@@ -56,7 +56,7 @@ public class ProjectManager extends DataManager {
                 String closeDate = row[COL_CLOSE_DATE];
                 String manager = row[COL_MANAGER];
                 int officerSlots = Integer.parseInt(row[COL_OFFICER_SLOTS]);
-                String[] officers = row[COL_OFFICERS].replace("\"", "").split(","); // Removing quotation marks and splitting by commas
+                String[] officers = row[COL_OFFICERS].replace("\"", "").split("/"); // Removing quotation marks and splitting by /
                 officers = Arrays.stream(officers)
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new);

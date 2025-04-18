@@ -1,5 +1,6 @@
 package main.control.viewFilters;
 
+import main.control.TimeManager;
 import main.control.dataManagers.ProjectManager;
 import main.entity.Project;
 
@@ -26,6 +27,10 @@ public class ViewAll implements IViewFilter {
             List<String[]> flatTypes = project.getFlatTypes();
             String[] twoRoom = flatTypes.get(0); // Assuming 2-room details are at index 0
             String[] threeRoom = flatTypes.get(1); // Assuming 3-room details are at index 1
+
+            if(TimeManager.isAfter(project.getCloseDate())) { // Hides expired projects
+                continue;
+            }
 
             if (!(twoRoom[1].trim().equals("0") && threeRoom[1].trim().equals("0"))) { // If there is at least one 2 or 3 room flat
                 System.out.printf("%-15s %-15s %-10s %-10s %-10s %-10s %-10s %-10s %-15s %-15s %-10s%n",

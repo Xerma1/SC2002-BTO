@@ -13,8 +13,23 @@ public class TimeManager {
         String formattedDate = date.format(format); // Applying format to date
         return formattedDate;
     }
+
+    // Checks if the current date now is after closeDate
+    public static boolean isAfter(String closeDate) {
+        LocalDate date = LocalDate.now(); 
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yyyy"); // Defining format of date and time
+        try {
+            LocalDate close = LocalDate.parse(closeDate, format);
+            return (date.isAfter(close));
+
+        } catch (DateTimeParseException e) { // Handles exceptions that may occur during date parsing
+            System.out.println("Invalid date format. Please use 'M/d/yyyy'.");
+            return false;
+        }
+    }
+
+    // Checks if the current date now is within openDate and closeDate
     public static boolean isValidDate(String openDate, String closeDate) {
-        // Checks if the current date now is within openDate and closeDate
         LocalDate date = LocalDate.now(); 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yyyy"); // Defining format of date and time
         try {

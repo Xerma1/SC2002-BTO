@@ -81,13 +81,6 @@ public class ApplicationManager {
             boolean isApplicantOfficer = false;
 
             if (registeredOfficers != null) {
-                for (String officer : registeredOfficers) {
-                    System.out.println(officer);
-                }
-            }
-
-/*
-
                 isApplicantOfficer = Arrays.stream(registeredOfficers)
                     .map(String::trim) // Trim whitespace from each officer's name
                     .anyMatch(officer -> officer.equalsIgnoreCase(applicant.getName())); // Case-insensitive comparison
@@ -96,7 +89,6 @@ public class ApplicationManager {
                 System.out.println("You cannot apply for project " +  projName + " as you are already registered as an officer for this project.");
                 return false;
             }
-*/
         }
 
         // Asking for room type
@@ -131,11 +123,9 @@ public class ApplicationManager {
 
 
     public static void viewApplication(Applicant applicant) {
-        String filePath = APPL_CSV_PATH; // Path to the CSV file
-
         List<String[]> applications;
         try {
-            applications = DataManager.readCSV(filePath);
+            applications = DataManager.readCSV(APPL_CSV_PATH);
             for (String[] values : applications) {
                 if (values[1].trim().equals(applicant.getUserID())) {
                     // Print application details

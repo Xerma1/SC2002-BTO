@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
+import main.entity.Enquiry;
 import main.entity.Officer;
 import main.entity.Project;
 
@@ -65,9 +66,13 @@ public class ProjectManager extends DataManager {
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new); // Convert back to an array
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
-                // String[] enquiries = row[COL_ENQUIRIES];
+                String[] enquiriesString = row[COL_ENQUIRIES]
+                    .replace("\"", "") // Remove surrounding quotation marks
+                    .split(","); // Split by commas
+                List<Enquiry> enquiriesObjects;
+                enquiriesObjects = EnquiryManager.makeEnquiries(enquiriesString);
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiries));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiriesObjects));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();

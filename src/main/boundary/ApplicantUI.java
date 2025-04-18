@@ -6,7 +6,6 @@ import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
 import main.entity.User;
-import main.entity.Project;
 
 import java.util.Scanner;
 

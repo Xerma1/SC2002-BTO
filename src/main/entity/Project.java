@@ -12,10 +12,11 @@ public class Project {
     private int officerSlots;
     private String[] officers;
     private boolean visibility; // True if project is open for application, false otherwise 
+    private List<Enquiry> enquiries;
 
     // Constructor
     public Project(String projectName, String neighbourhood, List<String[]> flatTypes, 
-                   String openDate, String closeDate, String manager, int officerSlots, String[] officers, boolean visibility) {
+                   String openDate, String closeDate, String manager, int officerSlots, String[] officers, boolean visibility, List<Enquiry> enquiries) {
         this.projectName = projectName;
         this.neighbourhood = neighbourhood;
         this.flatTypes = flatTypes;
@@ -25,7 +26,11 @@ public class Project {
         this.officerSlots = officerSlots;
         this.officers = officers;
         this.visibility = visibility;
+        this.enquiries = enquiries;
     }
+
+    // viewEnquiries()
+    // deleteEnquiry()
 
     // Getter methods
     public String getProjectName() {

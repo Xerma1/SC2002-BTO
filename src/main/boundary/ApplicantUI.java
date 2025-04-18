@@ -6,7 +6,6 @@ import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
 import main.entity.User;
-import main.entity.Project;
 
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class ApplicantUI implements IusergroupUI {
                 2.  View list of BTO projects
                 3.  Apply for BTO project
                 4.  View details of applied BTO project and application status
-                5.  Book flat
+                5.  Request booking of flat
                 6.  View receipt of booked flat
                 7.  Request withdrawl from BTO application/booking
                 8.  Submit enquiry
@@ -35,7 +34,7 @@ public class ApplicantUI implements IusergroupUI {
 
         // Switch statement to process each option
         int choice;
-        do{
+        do {
             // Print UI
             System.out.println("<< Logged in as applicant: " + username + " >>");
             System.out.println(applicantMenu);
@@ -77,7 +76,7 @@ public class ApplicantUI implements IusergroupUI {
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
-        }while (choice != 10);
+        } while (choice != 10);
         
     }
 

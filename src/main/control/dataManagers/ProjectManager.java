@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
+import main.entity.Enquiry;
+import main.entity.Officer;
 import main.entity.Project;
 
 public class ProjectManager extends DataManager {
@@ -26,6 +28,7 @@ public class ProjectManager extends DataManager {
     private static final int COL_OFFICER_SLOTS = 11;
     private static final int COL_OFFICERS = 12;
     private static final int COL_VISIBILITY = 13;
+    private static final int COL_ENQUIRIES = 14;
 
     // Private method to fetch sensitive project data. 
     private static List<Project> fetchAll() {
@@ -63,8 +66,13 @@ public class ProjectManager extends DataManager {
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new); // Convert back to an array
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
+                String[] enquiriesString = row[COL_ENQUIRIES]
+                    .replace("\"", "") // Remove surrounding quotation marks
+                    .split(","); // Split by commas
+                List<Enquiry> enquiriesObjects;
+                enquiriesObjects = EnquiryManager.makeEnquiries(enquiriesString);
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiriesObjects));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();
@@ -74,9 +82,22 @@ public class ProjectManager extends DataManager {
         return projects;
     }
     
-    public static List<Project> getFetchAll(){
+    public static List<Project> getFetchAll() {
         return ProjectManager.fetchAll();
     }
+
+    public static boolean isRegistered(Officer officer, Project project) {
+        String[] registeredOfficers = project.getOfficers();
+        boolean isOfficerRegistered = false;
+
+        if (registeredOfficers != null) {
+            isOfficerRegistered = Arrays.stream(registeredOfficers)
+                .map(String::trim) // Trim whitespace from each officer's name
+                .anyMatch(officerName -> officerName.equalsIgnoreCase(officer.getName())); // Case-insensitive comparison
+        }
+        return isOfficerRegistered;
+    }
+
 
     public static String askProjName(Scanner scanner) {
         System.out.print("Which project would you like to apply for?: ");

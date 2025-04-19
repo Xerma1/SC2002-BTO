@@ -9,54 +9,68 @@ import java.util.Scanner;
 import main.entity.Project;
 
 public class ProjectManager extends DataManager {
-    private static final String PROJ_CSV_PATH = "data/processed/projectList.csv";
+    public static final String PROJ_CSV_PATH = "data/processed/projectList.csv";  // public now
 
     public static List<Project> getFetchAll() {
-    List<String[]> rows = null;
-    try {
-        rows = readCSV(PROJ_CSV_PATH);
-    } catch (IOException e) {
-        System.err.println("Error reading file: " + PROJ_CSV_PATH);
-    }
-    if (rows == null || rows.isEmpty()) {
-        return null;
-    }
-
-    List<Project> projects = new ArrayList<>();
-    for (int i = 1; i < rows.size(); i++) { // skip header row
-        String[] row = rows.get(i);
+        List<String[]> rows = null;
         try {
-            String projectName = row[0];
-            String neighborhood = row[1];
-            List<String[]> flatTypes = List.of(
-                new String[] { row[2], row[3], row[4] },
-                new String[] { row[5], row[6], row[7] }
-            );
-            String openDate = row[8];
-            String closeDate = row[9];
-            String manager = row[10];
-            int officerSlots = Integer.parseInt(row[11]);
-            String[] officers = row[12].replace("\"", "").split(",");
-            officers = Arrays.stream(officers).map(String::trim).toArray(String[]::new);
-            boolean visibility = Boolean.parseBoolean(row[13]);
-
-            projects.add(new Project(projectName, neighborhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
-        } catch (Exception e) {
-            System.err.println("Error processing row: " + String.join(",", row));
+            rows = readCSV(PROJ_CSV_PATH);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + PROJ_CSV_PATH);
         }
-    }
+        if (rows == null || rows.isEmpty()) {
+            return null;
+        }
 
-    return projects;
-}
+        List<Project> projects = new ArrayList<>();
+        for (int i = 1; i < rows.size(); i++) { // skip header row
+            String[] row = rows.get(i);
+            try {
+                String projectName = row[0];
+                String neighborhood = row[1];
+                List<String[]> flatTypes = List.of(
+                    new String[] { row[2], row[3], row[4] },
+                    new String[] { row[5], row[6], row[7] }
+                );
+                String openDate = row[8];
+                String closeDate = row[9];
+                String manager = row[10];
+                int officerSlots = Integer.parseInt(row[11]);
+                String[] officers = row[12].replace("\"", "").split(",");
+                officers = Arrays.stream(officers).map(String::trim).toArray(String[]::new);
+                boolean visibility = Boolean.parseBoolean(row[13]);
+
+                projects.add(new Project(projectName, neighborhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
+            } catch (Exception e) {
+                System.err.println("Error processing row: " + String.join(",", row));
+            }
+        }
+
+        return projects;
+    }
 
     public static void createEditDeleteProject(Scanner scanner) {
-        List<String[]> projects = null;
-try {
-    projects = new ArrayList<>(readCSV(PROJ_CSV_PATH)); // FIX: make modifiable copy
-} catch (IOException e) {
-    System.err.println("Error reading file: " + PROJ_CSV_PATH);
-}
-if (projects == null) projects = new ArrayList<>();
+        List<String[]> allRows = null;
+        try {
+            allRows = new ArrayList<>(readCSV(PROJ_CSV_PATH));
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + PROJ_CSV_PATH);
+        }
+        if (allRows == null) allRows = new ArrayList<>();
+
+        String[] header;
+        List<String[]> projects;
+        if (allRows.isEmpty()) {
+            header = new String[]{
+                "Project Name", "Neighborhood", "Has 2-Room", "2-Room No", "2-Room Price",
+                "Has 3-Room", "3-Room No", "3-Room Price", "Open Date", "Close Date",
+                "Manager", "Officer Slots", "Officers", "Visibility"
+            };
+            projects = new ArrayList<>();
+        } else {
+            header = allRows.get(0);
+            projects = new ArrayList<>(allRows.subList(1, allRows.size()));
+        }
 
         System.out.println("""
             1. Create project
@@ -94,18 +108,14 @@ if (projects == null) projects = new ArrayList<>();
 
             String[] newProject = {
                 name, neighborhood, has2Room, twoRoomNo, twoRoomPrice,
-                has3Room, threeRoomNo, threeRoomPrice, openDate, closeDate, manager, "0", "", "true"
+                has3Room, threeRoomNo, threeRoomPrice, openDate, closeDate,
+                manager, "0", "", "true"
             };
 
             projects.add(newProject);
 
-            try {
-                writeCSV(PROJ_CSV_PATH, projects);
-                System.out.println("Project created successfully.");
-            } catch (IOException e) {
-                System.out.println("Error writing to file.");
-                e.printStackTrace();
-            }
+            writeProjectsToCSV(header, projects);
+            System.out.println("Project created successfully.");
         }
         else if (option == 2) {
             // EDIT PROJECT
@@ -123,13 +133,8 @@ if (projects == null) projects = new ArrayList<>();
                 }
             }
             if (found) {
-                try {
-                    writeCSV(PROJ_CSV_PATH, projects);
-                    System.out.println("Project edited successfully.");
-                } catch (IOException e) {
-                    System.out.println("Error writing to file.");
-                    e.printStackTrace();
-                }
+                writeProjectsToCSV(header, projects);
+                System.out.println("Project edited successfully.");
             } else {
                 System.out.println("Project not found.");
             }
@@ -141,13 +146,8 @@ if (projects == null) projects = new ArrayList<>();
             boolean removed = projects.removeIf(p -> p[0].equalsIgnoreCase(target));
 
             if (removed) {
-                try {
-                    writeCSV(PROJ_CSV_PATH, projects);
-                    System.out.println("Project deleted successfully.");
-                } catch (IOException e) {
-                    System.out.println("Error writing to file.");
-                    e.printStackTrace();
-                }
+                writeProjectsToCSV(header, projects);
+                System.out.println("Project deleted successfully.");
             } else {
                 System.out.println("Project not found.");
             }
@@ -158,16 +158,19 @@ if (projects == null) projects = new ArrayList<>();
     }
 
     public static void toggleProjectVisibility(Scanner scanner) {
-        List<String[]> projects = null;
+        List<String[]> allRows = null;
         try {
-            projects = readCSV(PROJ_CSV_PATH);
+            allRows = new ArrayList<>(readCSV(PROJ_CSV_PATH));
         } catch (IOException e) {
             System.err.println("Error reading file: " + PROJ_CSV_PATH);
         }
-        if (projects == null) {
+        if (allRows == null || allRows.isEmpty()) {
             System.out.println("No projects found.");
             return;
         }
+
+        String[] header = allRows.get(0);
+        List<String[]> projects = new ArrayList<>(allRows.subList(1, allRows.size()));
 
         System.out.print("Enter project name to toggle visibility: ");
         String target = scanner.nextLine();
@@ -179,15 +182,24 @@ if (projects == null) projects = new ArrayList<>();
                 break;
             }
         }
+
         if (found) {
-            try {
-                writeCSV(PROJ_CSV_PATH, projects);
-                System.out.println("Project visibility toggled successfully.");
-            } catch (IOException e) {
-                System.out.println("Error writing to file.");
-            }
+            writeProjectsToCSV(header, projects);
+            System.out.println("Project visibility toggled successfully.");
         } else {
             System.out.println("Project not found.");
+        }
+    }
+
+    private static void writeProjectsToCSV(String[] header, List<String[]> projects) {
+        List<String[]> output = new ArrayList<>();
+        output.add(header);
+        output.addAll(projects);
+        try {
+            writeCSV(PROJ_CSV_PATH, output);
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+            e.printStackTrace();
         }
     }
 }

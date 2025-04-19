@@ -20,11 +20,10 @@ public class ApplicantUI implements IusergroupUI {
                 3.  Apply for BTO project
                 4.  View details of applied BTO project and application status
                 5.  Request booking of flat
-                6.  View receipt of booked flat
-                7.  Request withdrawl from BTO application/booking
-                8.  Submit enquiry
-                9.  View/edit/delete enquiries
-                10. Exit
+                6.  Request withdrawl from BTO application/booking
+                7.  Submit enquiry
+                8.  View/edit/delete enquiries
+                9. Exit
 
                 """;
     @Override
@@ -85,7 +84,18 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 8 -> {
+                case 6 -> {
+                    Boolean isSuccessful = ApplicationManager.requestWithdrawal(applicant, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Withdrawl request is unsuccessful.");
+                    }
+                    else {
+                        System.out.println("Withdrawl request successfully lodged!");
+                    }
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 7 -> {
                     Boolean isSuccessful = EnquiryManager.askEnquiry(applicant, scanner);
                     if (!isSuccessful) {
                         System.out.println("Enquiry not submitted.");
@@ -97,10 +107,10 @@ public class ApplicantUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 
-                case 10 -> System.out.println("Exiting....");
+                case 9 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
-        } while (choice != 10);
+        } while (choice != 9);
         
     }
 

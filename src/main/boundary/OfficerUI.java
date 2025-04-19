@@ -31,11 +31,10 @@ public class OfficerUI implements IusergroupUI {
                 9.  Apply for BTO project as an applicant
                 10. View details of applied BTO project and application status
                 11. Request booking of flat
-                12. View receipt of booked flat
-                13. Request withdrawl from BTO application/booking
-                14. Submit enquiry 
-                15. View/edit/delete enquiries 
-                16. Exit
+                12. Request withdrawl from BTO application/booking
+                13. Submit enquiry 
+                14. View/edit/delete enquiries 
+                15. Exit
                 
                 """;
 
@@ -106,7 +105,7 @@ public class OfficerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 14 -> {
+                case 13 -> {
                     Boolean isSuccessful = EnquiryManager.askEnquiry(officer, scanner);
                     if (!isSuccessful) {
                         System.out.println("Enquiry not submitted.");
@@ -117,7 +116,7 @@ public class OfficerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                case 16 -> System.out.println("Exiting....");
+                case 15 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }
         } while (choice != 16);

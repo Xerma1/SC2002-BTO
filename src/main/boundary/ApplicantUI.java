@@ -86,7 +86,7 @@ public class ApplicantUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 8 -> {
-                    Boolean isSuccessful = EnquiryManager.askEnquiry(applicant, scanner);
+                    Boolean isSuccessful = EnquiryManager.createEnquiry(applicant, scanner);
                     if (!isSuccessful) {
                         System.out.println("Enquiry not submitted.");
                     }

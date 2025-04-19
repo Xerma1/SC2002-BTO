@@ -77,7 +77,7 @@ public class OfficerUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 6 -> {
-                    EnquiryManager.viewEnquiries(officer.getHandling());
+                    EnquiryManager.viewEnquiries(officer);
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
@@ -107,7 +107,7 @@ public class OfficerUI implements IusergroupUI {
                     scanner.nextLine();
                 }
                 case 14 -> {
-                    Boolean isSuccessful = EnquiryManager.askEnquiry(officer, scanner);
+                    Boolean isSuccessful = EnquiryManager.createEnquiry(officer, scanner);
                     if (!isSuccessful) {
                         System.out.println("Enquiry not submitted.");
                     }

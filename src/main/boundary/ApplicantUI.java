@@ -96,7 +96,9 @@ public class ApplicantUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
-                
+                case 9 -> {
+                    EnquiryManager.viewEnquiries(applicant, scanner);
+                }
                 case 10 -> System.out.println("Exiting....");
                 default -> System.out.print("default");
             }

@@ -115,7 +115,7 @@ public class EnquiryManager {
 
         boolean foundEnquiry = false;
         for (Project project : projects) {
-            for (String[] enquiry : enquiries) { // n^2 gg
+            for (String[] enquiry : enquiries) {
                 if (enquiry[COL_PROJECT_NAME].equalsIgnoreCase(project.getProjectName())) { // Finding enquiries by project name
                     System.out.printf("%-10s %-15s %-10s%n",
                     "Username", "User ID", "Project Name");
@@ -139,7 +139,104 @@ public class EnquiryManager {
         System.out.println();
     }
 
-    // Used by officers to delete enquiries
+    // Used by applicants to view enquiries
+    public static void viewEnquiries(Applicant applicant, Scanner scanner) {
+        List<String[]> enquiries = null;
+        try {
+            enquiries = DataManager.readCSV(ENQ_CSV_PATH);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + ENQ_CSV_PATH);
+            e.printStackTrace();
+        }
+
+        if (enquiries == null || enquiries.isEmpty()) { // No enquiries in file
+            System.out.println("No enquiries.");
+            return;
+        }
+
+        System.out.println("1. View your enquiries.");
+        System.out.println("2. View enquiries for a project.");
+        int choice = -1;
+        while (true) {
+            System.out.print("Input: ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                if (choice == 1 || choice == 2) {
+                    scanner.nextLine();
+                    break; // Valid input
+                } else {
+                    System.out.println("Invalid choice. Please type 1 or 2.");
+                }
+            } else {
+                System.out.println("Invalid input. Please type a number.");
+                scanner.next(); // Discard invalid non-int input
+            }
+        }
+        switch (choice) {
+            case 1 -> {
+                boolean foundEnquiry = false;
+                for (String[] enquiry : enquiries) {
+                    if (enquiry[COL_USER_ID].equalsIgnoreCase(applicant.getUserID())) { // Finding enquiries by User ID
+                        System.out.println("Project Name: " + enquiry[COL_PROJECT_NAME]);
+                        System.out.println("=".repeat(140));
+                        System.out.println("Question:     " + enquiry[COL_QUESTION]);
+                        System.out.println("Answer:       " + enquiry[COL_ANSWER]);
+                        System.out.println("=".repeat(140));
+                        System.out.println();
+                        foundEnquiry = true;
+                    }
+                }
+                if (!foundEnquiry) {
+                    System.out.print("No enquiries.");
+                }
+        
+                System.out.println();
+                return;
+            }
+            case 2 -> {
+                IViewFilter viewInterface = ViewFilterFactory.getViewFilter(applicant.filterType);
+                List<Project> validProjects = viewInterface.getValidProjects();
+                if (validProjects == null || validProjects.isEmpty()) { // No projects available
+                    System.out.println("No projects available.");
+                    return;
+                }
+
+                Project projectTarget = null;
+                String projectName = ProjectManager.askProjName(scanner);
+                for (Project project : validProjects) {
+                    if (project.getProjectName().equalsIgnoreCase(projectName)) {
+                        projectTarget = project;
+                    }
+                }
+                if (projectTarget == null) { // Project name not found in available projects 
+                    System.out.println("Invalid project");
+                    return;
+                }
+
+                boolean foundEnquiry = false;
+                for (String[] enquiry : enquiries) {
+                    if (enquiry[COL_PROJECT_NAME].equalsIgnoreCase(projectTarget.getProjectName())) { // Finding enquiries by project name
+                        System.out.println("Username:  " + enquiry[COL_USER_NAME]);
+                        System.out.println("=".repeat(140));
+                        System.out.println("Question:  " + enquiry[COL_QUESTION]);
+                        System.out.println("Answer:    "+ enquiry[COL_ANSWER]);
+                        System.out.println("=".repeat(140));
+                        System.out.println();
+                        foundEnquiry = true;
+                    }
+                }
+                if (!foundEnquiry) {
+                    System.out.print("No enquiries.");
+                }
+            }
+            default -> System.out.println("default");
+        }
+    }    
+    
+    // Used by applicants to edit enquiries
+    public static void editEnquiry() {};
+
+    // Used by applicants to delete enquiries
     public static void deleteEnquiry(Enquiry enquiryObject) {
         List<String[]> enquiries = null;
         try {
@@ -157,7 +254,5 @@ public class EnquiryManager {
 
     }
 
-    // Used by officers to edit enquiries
-    public static void editEnquiry() {};
 
 }

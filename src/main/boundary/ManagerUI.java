@@ -20,7 +20,7 @@ public class ManagerUI implements IusergroupUI {
                 5.  View pending and approved HDB officer registrations
                 6.  Approve/reject HDB officer registrations
                 7.  Approve/reject applicant BTO applications
-                8.  Approve/reject applicant withdrawl requests
+                8.  Approve/reject applicant withdrawal requests
                 9.  Generate report of applicants with respective flat bookings
                 10. View all enquiries of all projects
                 11. View/reply to enquiries regarding own handling projects
@@ -29,17 +29,19 @@ public class ManagerUI implements IusergroupUI {
                 """;
 
     @Override
-    public void runMenu(Scanner scanner, String username, String userID) {
-        User userdata = UserManager.getFetch(userID);
-        Manager manager = new Manager(userdata.getName(), userdata.getUserID(), userdata.getAge(), userdata.getMarried());
+    public void runMenu(Scanner scanner, User userdata) {
+        Manager manager = new Manager(
+            userdata.getName(),
+            userdata.getUserID(),
+            userdata.getAge(),
+            userdata.getMarried(),
+            userdata.getPassword(),
+            userdata.getAccessLevel()
+        );
 
-
-        // Create instance of manager class
-
-        // Switch statement to process each option
         int choice;
         do {
-            System.out.println("<< Logged in as manager: " + username + " >>");
+            System.out.println("<< Logged in as manager: " + userdata.getName() + " >>");
             System.out.println(managerMenu);
             System.out.print("Input: ");
 
@@ -47,10 +49,10 @@ public class ManagerUI implements IusergroupUI {
             scanner.nextLine(); // consume leftover newline
 
             switch (choice) {
-                case 1 -> manager.changePassword();
+                case 1 -> manager.changePassword(scanner);
 
                 case 2 -> {
-                    IviewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
+                    IViewFilter viewInterface = ViewFilterFactory.getViewFilter("all");
                     System.out.println("Showing all projects:");
                     System.out.println();
                     viewInterface.view();
@@ -66,16 +68,13 @@ public class ManagerUI implements IusergroupUI {
 
                 case 6 -> OfficerManager.approveRejectOfficerRegistrations(scanner);
 
-                case 7 -> System.out.println("Exiting Manager menu...");
-                
-                case 12 -> System.out.println("Exiting....");
+                case 12 -> System.out.println("Exiting Manager menu...");
+
                 default -> System.out.println("Invalid choice. Try again.");
             }
-        }while (choice != 12);
-        
+        } while (choice != 12);
     }
-
-}
+} 
 
 
 

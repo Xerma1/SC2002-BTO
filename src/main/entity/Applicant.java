@@ -3,7 +3,7 @@ package main.entity;
 public class Applicant extends User {
     //private applicantApplication application;
     public String filterType;
-    private static final String FILTER_ALL = "all";
+    private static final String FILTER_ALL = "married";
     private static final String FILTER_SINGLE = "single";
 
     //constructor

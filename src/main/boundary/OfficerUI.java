@@ -1,6 +1,8 @@
 package main.boundary;
 
 import main.control.dataManagers.ApplicationManager;
+import main.control.dataManagers.BookingManager;
+import main.control.dataManagers.EnquiryManager;
 import main.control.dataManagers.UserManager;
 import main.control.viewFilters.*;
 import main.entity.Officer;
@@ -69,6 +71,16 @@ public class OfficerUI implements IusergroupUI {
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }
+                case 5 -> {
+                    officer.viewHandling();
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 6 -> {
+                    EnquiryManager.viewEnquiries(officer.getHandling());
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
                 case 9 -> {
                     if (ApplicationManager.applyBTO(officer, scanner)) {
                         System.out.println("Applied successfully!");
@@ -80,6 +92,28 @@ public class OfficerUI implements IusergroupUI {
                 }
                 case 10 -> {
                     ApplicationManager.viewApplication(officer);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 11 -> {
+                    Boolean isSuccessful = BookingManager.initiateBooking(officer, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Booking unsuccessful.");
+                    }
+                    else {
+                        System.out.println("Booking successful!");
+                    }
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 14 -> {
+                    Boolean isSuccessful = EnquiryManager.askEnquiry(officer, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Enquiry not submitted.");
+                    }
+                    else {
+                        System.out.println("Enquiry submitted!");
+                    }
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }

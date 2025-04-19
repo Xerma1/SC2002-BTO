@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.entity.Applicant;
-import main.entity.Enquiry;
 import main.entity.Officer;
 import main.entity.Project;
 
@@ -28,7 +27,6 @@ public class ProjectManager extends DataManager {
     private static final int COL_OFFICER_SLOTS = 11;
     private static final int COL_OFFICERS = 12;
     private static final int COL_VISIBILITY = 13;
-    private static final int COL_ENQUIRIES = 14;
 
     // Private method to fetch sensitive project data. 
     private static List<Project> fetchAll() {
@@ -66,13 +64,8 @@ public class ProjectManager extends DataManager {
                     .map(String::trim) // Trim whitespace
                     .toArray(String[]::new); // Convert back to an array
                 boolean visibility = Boolean.parseBoolean(row[COL_VISIBILITY]);
-                String[] enquiriesString = row[COL_ENQUIRIES]
-                    .replace("\"", "") // Remove surrounding quotation marks
-                    .split(","); // Split by commas
-                List<Enquiry> enquiriesObjects;
-                enquiriesObjects = EnquiryManager.makeEnquiries(enquiriesString);
 
-                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility, enquiriesObjects));
+                projects.add(new Project(projectName, neighbourhood, flatTypes, openDate, closeDate, manager, officerSlots, officers, visibility));
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.err.println("Error processing row: " + String.join(",", row));
                 e.printStackTrace();
@@ -124,5 +117,23 @@ public class ProjectManager extends DataManager {
         }
     }
 
+    private static Project ProjectByName(String projectName) {
+        List<Project> projects = getFetchAll(); // Fetch all projects
+        if (projects == null || projects.isEmpty()) {
+            System.out.println("No projects available.");
+            return null;
+        }
+    
+        for (Project project : projects) {
+            if (project.getProjectName().equalsIgnoreCase(projectName)) { // Case-insensitive comparison
+                return project;
+            }
+        }
 
+        return null; // Return null if no matching project is found
+    }
+
+    public static Project getProjectByName(String projectName){
+        return ProjectByName(projectName);
+    }
 }

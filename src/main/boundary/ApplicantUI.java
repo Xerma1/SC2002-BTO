@@ -2,6 +2,8 @@ package main.boundary;
 
 import main.control.dataManagers.UserManager;
 import main.control.dataManagers.ApplicationManager;
+import main.control.dataManagers.BookingManager;
+import main.control.dataManagers.EnquiryManager;
 import main.control.viewFilters.IViewFilter;
 import main.control.viewFilters.ViewFilterFactory;
 import main.entity.Applicant;
@@ -69,6 +71,28 @@ public class ApplicantUI implements IusergroupUI {
                 case 4 -> {
                     System.out.println("Viewing application details: ");
                     ApplicationManager.viewApplication(applicant);
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 5 -> {
+                    Boolean isSuccessful = BookingManager.initiateBooking(applicant, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Booking unsuccessful.");
+                    }
+                    else {
+                        System.out.println("Booking successful!");
+                    }
+                    System.out.println("Press 'enter' to continue...");
+                    scanner.nextLine();
+                }
+                case 8 -> {
+                    Boolean isSuccessful = EnquiryManager.askEnquiry(applicant, scanner);
+                    if (!isSuccessful) {
+                        System.out.println("Enquiry not submitted.");
+                    }
+                    else {
+                        System.out.println("Enquiry submitted!");
+                    }
                     System.out.println("Press 'enter' to continue...");
                     scanner.nextLine();
                 }

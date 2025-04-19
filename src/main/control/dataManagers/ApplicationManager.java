@@ -143,7 +143,7 @@ public class ApplicationManager extends DataManager {
         if (applications == null || applications.isEmpty()) {
             return null; // No applications exist
         }
-
+        
         for (String[] application : applications) {
             if (application.length > 1 && application[1].trim().equals(userId)) {
                 return application[4].trim(); // Return the project name (column 4)
@@ -152,6 +152,8 @@ public class ApplicationManager extends DataManager {
 
         return null; // User has not applied for any project
     }
+
+   
 }
 
 
